@@ -1,0 +1,310 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row mt-2 flex-column-reverse flex-lg-row">
+            <div class="col-md-8">
+                <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title">JUGADOR</h4>
+                    <p class="card-category">Ingresa el CURP para agregar o actualizar al jugador</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="form">
+                      <div class="row align-items-center">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="row align-items-center">
+                                <div class="col-sm-9 col-md-9">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">CURP</label>
+                                        <input type="text" class="form-control" [(ngModel)]="jugador.curp" name="curp" style="text-transform: uppercase;" maxlength="18">
+                                    </div>
+                                </div>
+                                <div class=" col-sm-9 col-md-3">
+                                    <br>
+                                    <button class="btn btn-primary" (click)="validar()"><i class="material-icons">search</i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                          <div class="row align-items-center">
+                            <div class="col-md-10">
+                              <div>
+                                <label for="formFile" class="form-label">Subir fotografía</label>
+                                <input #myInput class="form-control" type="file" accept=".jpg" (change)="cambiarImagen($event)" name="file" [disabled]="form">
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              <br>
+                              <button class="btn btn-primary" [disabled]="form"><i class="fas fa-camera" (click)="tomarFoto()" style="cursor: pointer;" title="Tomar foto"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Apellido paterno</label>
+                            <input type="text" class="form-control" [disabled]="form"  [(ngModel)]="jugador.apellido_p" name="app" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Apellido materno</label>
+                            <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.apellido_m" name="apm" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Nombres (s)</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.nombre" name="nombre" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="fecha" class="bmd-label-floating">Fecha de nacimiento</label>
+                            <input type="date" class="form-control" [disabled]="form" [(ngModel)]="jugador.fecha_nacimiento" name="fecha_nacimiento" id="fecha">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Sexo</label>
+                                <select class="form-select" aria-label="Default select example"  [disabled]="form" [(ngModel)]="jugador.sexo" name="sexo">
+                                    <option selected disabled value="-1">Selecciona el sexo</option>
+                                    <option value="HOMBRE">MASCULINO</option>
+                                    <option value="MUJER">FEMENINO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Telefono</label>
+                              <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.telefono" name="telefono" style="text-transform: uppercase;" maxlength="10">
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Calle</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.calle" name="direccion" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Num. interior</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.num_int" name="direccion" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Num. exterior</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.num_exterior" name="direccion" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Cruzamiento uno</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.cruzamiento_uno" name="direccion" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Cruzamiento dos</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.cruzamiento_dos" name="direccion" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Colonia</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.colonia" name="direccion" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Municipio</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.municipio" name="mun" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Estado</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.estado" name="estado" style="text-transform: uppercase;">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Codigo postal</label>
+                            <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.cp" name="cp" style="text-transform: uppercase;" maxlength="5">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label>Notas</label>
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Describe la nota del jugador</label>
+                              <textarea class="form-control" rows="5" [disabled]="form" [(ngModel)]="jugador.nota" name="nota" style="text-transform: uppercase;"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                            <h4>INFORMACIÓN DEL TUTOR</h4>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Apellido paterno</label>
+                              <input type="text" class="form-control" [disabled]="form"  [(ngModel)]="jugador.apellido_p_rep" name="apmp" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Apellido materno</label>
+                              <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.apellido_m_rep" name="apmp" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Nombre (s)</label>
+                              <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.nombre_rep" name="np" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Telefono</label>
+                            <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.tel_rep" name="tf" style="text-transform: uppercase;" maxlength="10">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Correo</label>
+                              <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.correo_rep" name="tff">
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-12">
+                              <h4>INFORMACIÓN DE LOS PADRES</h4>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Apellido paterno (Padre)</label>
+                              <input type="text" class="form-control" [disabled]="form"  [(ngModel)]="jugador.apellido_pp" name="apmp" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Apellido materno (Padre)</label>
+                              <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.apellido_mp" name="apmp" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Nombre (s) (Padre)</label>
+                              <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.nombre_p" name="np" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Apellido paterno (Madre)</label>
+                              <input type="text" class="form-control" [disabled]="form" [(ngModel)]="jugador.apellido_pm" name="apmm" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Apellido materno (Madre)</label>
+                              <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.apellido_mm" name="apmm" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Nombre (s) (Madre)</label>
+                              <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.nombre_m" name="nombre_m" style="text-transform: uppercase;">
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Telefono (Padre)</label>
+                            <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.telefono_p" name="tf" style="text-transform: uppercase;" maxlength="10">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Telefono (Madre)</label>
+                              <input type="email" class="form-control" [disabled]="form" [(ngModel)]="jugador.telefono_m" name="tff" style="text-transform: uppercase;" maxlength="10">
+                            </div>
+                          </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary pull-right" (click)="guardar()">Agregar a mi equipo</button>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card card-profile">
+                  <div class="card-avatar">
+                    <div class="avatar">
+                      <img class="img" [src]="foto"/>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h6 class="card-category">JUGADOR</h6>
+                    <h4 class="card-title" style="text-transform: uppercase;">{{jugador.apellido_p}} {{jugador.apellido_m}} {{jugador.nombre}}</h4>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+<ng-template #modal_camera let-camera>
+  <div class="modal-header">
+      <h2 class="modal-title" id="tituloModal">Tomar fotografia</h2>
+  </div>
+  <div class="modal-body">
+      <div class="container">
+          <div class="row">
+              <div *ngIf="isCameraExist; else noCameraExist" class="col-12">
+                  <div class="border border-success rounded text-center" style="width: 100%;height: 265px;">
+                      <webcam [height]="450" [width]="350" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+                      *ngIf="showWebcam" [switchCamera]="nextWebcamObservable"></webcam>
+                  </div>
+              
+                  <div *ngIf="errors.length > 0">
+                      <h4>Error Messages:</h4>
+                      <ul *ngFor="let error of errors">
+                          <li>{{ error | json }}</li>
+                      </ul>
+                  </div>
+              </div>
+              
+              <ng-template #noCameraExist>
+                  <div class="border border-danger rounded text-center" style="display: flex;justify-content: center;align-items: center;width: 450px;height: 350px;">
+                      Este dispositivo no cuenta con una camara disponible
+                  </div>
+              </ng-template>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-warning" (click)="camera.close()">Cerrar</button>
+      <button *ngIf="isCameraExist" type="button" class="btn btn-success" (click)="takeSnapshot()">Tomar foto</button>
+  </div>
+</ng-template>

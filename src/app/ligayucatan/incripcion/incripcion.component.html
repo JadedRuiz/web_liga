@@ -1,0 +1,240 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                      <h4 class="card-title">INSCRIPCIONES</h4>
+                      <p class="card-category">{{temporada}}</p>
+                    </div>
+                    <div class="card-body">
+                        <mat-tab-group animationDuration="1000ms" mat-align-tabs="center">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span (click)="pintarInscripciones()">Inscripciones</span>
+                                </ng-template>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <th>Equipo</th>
+                                                    <th>Categoría</th>
+                                                    <th>Representante</th>
+                                                    <th>Acciones</th>
+                                                </thead>
+                                                <tbody *ngIf="detalle_ins.length > 0; else pintaVacioIns">
+                                                    <tr *ngFor="let inscripcion of detalle_ins">
+                                                        <td>{{inscripcion.Equipo}}</td>
+                                                        <td>{{inscripcion.Categoria}}</td>
+                                                        <td>{{inscripcion.Representante}}</td>
+                                                        <td>
+                                                            <!-- <mat-slide-toggle [(ngModel)]="inscripcion.Editable" (change)="bloquear(inscripcion.InscripcionID,$event)">Bloquear</mat-slide-toggle> -->
+                                                            <button class="btn-info btn-sm mx-1" (click)="verEquipo(inscripcion.InscripcionID)" title="Visualizar equipo"><i class="fas fa-users"></i></button>
+                                                            <button class="btn-warning btn-sm mx-1" (click)="visualizar(inscripcion.InscripcionID)" title="Visualizar recibo de pago"><i class="fas fa-eye text-white"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <ng-template #pintaVacioIns>
+                                                    <tbody>
+                                                        <tr class="text-center">
+                                                            <td colspan="5">Aún no hay equipos inscritos</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </ng-template>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Solicitudes">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <th>Id solicitud</th>
+                                                    <th>Equipo</th>
+                                                    <th>Representante</th>
+                                                    <th>Telefono</th>
+                                                    <th>Acciones</th>
+                                                </thead>
+                                                <tbody *ngIf="solicitudes.length > 0; else pintaVacio">
+                                                    <tr *ngFor="let solicitud of solicitudes">
+                                                        <td>{{solicitud.InscripcionID}}</td>
+                                                        <td>{{solicitud.Equipo}}</td>
+                                                        <td>{{solicitud.Representante}}</td>
+                                                        <td>{{solicitud.TelRep}}</td>
+                                                        <td>
+                                                            <button class="btn btn-warning" (click)="visualizar(solicitud.InscripcionID)" title="Visualizar recibo de pago"><i class="fas fa-eye"></i></button>
+                                                            <div class="dropdown d-inline-block">
+                                                                <button ngbDropdownToggle class="btn btn-info dropdown-toggle" title="Validar Solicitud" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-check-square"></i></button>
+                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                  <a class="dropdown-item" (click)="validar(solicitud.InscripcionID,1)" style="cursor: pointer;"><i class="fas fa-check"></i> &nbsp; Aceptar</a>
+                                                                  <a class="dropdown-item" (click)="validar(solicitud.InscripcionID,2)" style="cursor: pointer;"><i class="fas fa-times"></i> &nbsp; Rechazar</a>
+                                                                </div>
+                                                              </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <ng-template #pintaVacio>
+                                                    <tbody>
+                                                        <tr class="text-center">
+                                                            <td colspan="5">Aún no se tienen solicitudes en esta temporada</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </ng-template>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Rechazados"> Content 3 </mat-tab>
+                          </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-body">
+        <div class="form">
+            <div class="form-row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Describa la razon del rechazo</label>
+                        <textarea class="form-control" rows="5" name="nota" style="text-transform: uppercase;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" (click)="modal.close('Save click')"><i class="far fa-times-circle"></i> Cancelar</button>
+        <button class="btn btn-success" (click)="rechazar()"><i class="far fa-check-circle"></i> Continuar</button>
+    </div>
+</ng-template>
+<ng-template #equipo let-modalTeam>
+    <div class="modal-header">
+      <h2>Visualización del equipo</h2>
+    </div>
+    <div class="modal-body">
+        <div class="container my-2">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-profile">
+                      <div class="card-avatar">
+                        <a href="#pablo">
+                          <img class="img" src="./assets/logos/avatar.jpg" />
+                        </a>
+                      </div>
+                      <div class="card-body">
+                        <h2 class="card-category">REPRESENTANTE</h2>
+                        <h4 class="card-title">{{datos.representante}}</h4>
+                        <p class="card-description">
+                          CURP : &nbsp; {{datos.curp_re}}
+                          <br>
+                          CORREO : &nbsp; {{datos.correo_re}} 
+                          <br>
+                          TELEFONO : &nbsp; {{datos.telefono_re}} 
+                        </p>  
+                      </div>
+                  </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="card card-profile">
+                        <div class="card-avatar">
+                          <a href="#pablo">
+                            <img class="img" src="./assets/logos/avatar.jpg" />
+                          </a>
+                        </div>
+                        <div class="card-body">
+                          <h2 class="card-category">ENTRENADOR</h2>
+                          <h4 class="card-title">{{datos.entrenador}}</h4>
+                          <p class="card-description">
+                            CURP : &nbsp; {{datos.curp_en}}
+                            <br>
+                            CORREO : &nbsp; {{datos.correo_en}} 
+                            <br>
+                            TELEFONO : &nbsp; {{datos.telefono_en}} 
+                          </p>  
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="card card-profile">
+                        <div class="card-avatar">
+                          <a href="#pablo">
+                            <img class="img" src="./assets/logos/avatar.jpg" />
+                          </a>
+                        </div>
+                        <div class="card-body">
+                          <h2 class="card-category">AYUDANTE</h2>
+                          <h4 class="card-title">{{datos.ayudante}}</h4>
+                          <p class="card-description">
+                            CURP : &nbsp; {{datos.curp_ay}}
+                            <br>
+                            CORREO : &nbsp; {{datos.correo_ay}} 
+                            <br>
+                            TELEFONO : &nbsp; {{datos.telefono_ay}} 
+                          </p> 
+                        </div>
+                      </div>
+                  </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-plain">
+                        <div class="card-header card-header-primary">
+                          <div class="row">
+                            <div class="col-11">
+                              <h4 class="card-title mt-0">{{datos.equipo}}</h4>
+                              <p class="card-category">LISTA DE JUGADORES</p>
+                              <p class="card-category">{{datos.categoria}}</p>
+                            </div>
+                            <div class="col-1">
+                              <button class="btn-sm btn-light" title="FICHAS DE EQUIPO" (click)="verReporte(3,0)"><i class="fas fa-folder"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card-body">
+                          <div class="table-responsive">
+                            <table class="table table-hover">
+                              <thead class="">
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Fecha nacimiento</th>
+                                <th>Telefono padre</th>
+                                <th>Telefono madre</th>
+                                <th>Ficha</th>
+                              </thead>
+                              <tbody *ngIf="datos.jugadores.length > 0; else pintaVacio">
+                                <tr *ngFor="let jugador of datos.jugadores">
+                                  <td>{{jugador.JugadorID}}</td>
+                                  <td>{{jugador.nombre}}</td>
+                                  <td>{{jugador.FechaNacimiento}}</td>
+                                  <td>{{jugador.TelPadre}}</td>
+                                  <td>{{jugador.TelMadre}}</td>
+                                  <td><button class="btn-warning btn-sm" title="REPORTE DEL JUGADOR" (click)="verReporte(2,jugador.JugadorID)"><i class="fas fa-eye text-white"></i></button></td>
+                                </tr>
+                              </tbody>
+                              <ng-template #pintaVacio>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center">Aun no han registrado jugadores</td>
+                                    </tr>
+                                </tbody>
+                              </ng-template>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" (click)="modalTeam.close('Save click')"><i class="far fa-times-circle"></i> Cerrar</button>
+    </div>
+</ng-template>

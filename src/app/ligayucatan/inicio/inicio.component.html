@@ -1,0 +1,220 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="#pablo">
+                    <img class="img" [src]="foto_rep" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h2 class="card-category">REPRESENTANTE</h2>
+                  <h4 class="card-title">{{datos.representante}}</h4>
+                  <p class="card-description">
+                    CURP : &nbsp; {{datos.curp_re}}
+                    <br>
+                    CORREO : &nbsp; {{datos.correo_re}} 
+                    <br>
+                    TELEFONO : &nbsp; {{datos.telefono_re}} 
+                  </p>  
+                  <a (click)="editar(1)" style="cursor: pointer;color: white;" class="btn btn-primary btn-round">Editar</a>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-profile">
+                  <div class="card-avatar">
+                    <a href="#pablo">
+                      <img class="img" [src]="foto_en" />
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h2 class="card-category">ENTRENADOR</h2>
+                    <h4 class="card-title">{{datos.entrenador}}</h4>
+                    <p class="card-description">
+                      CURP : &nbsp; {{datos.curp_en}}
+                      <br>
+                      CORREO : &nbsp; {{datos.correo_en}} 
+                      <br>
+                      TELEFONO : &nbsp; {{datos.telefono_en}} 
+                    </p>  
+                    <a (click)="editar(2)" style="cursor: pointer;color: white;" class="btn btn-primary btn-round">Editar</a>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-profile">
+                  <div class="card-avatar">
+                    <a href="#pablo">
+                      <img class="img" [src]="foto_ay" />
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h2 class="card-category">AYUDANTE</h2>
+                    <h4 class="card-title">{{datos.ayudante}}</h4>
+                    <p class="card-description">
+                      CURP : &nbsp; {{datos.curp_ay}}
+                      <br>
+                      CORREO : &nbsp; {{datos.correo_ay}} 
+                      <br>
+                      TELEFONO : &nbsp; {{datos.telefono_ay}} 
+                    </p>  
+                    <a (click)="editar(3)" style="cursor: pointer;color: white;" class="btn btn-primary btn-round">Editar</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-plain">
+                    <div class="card-header card-header-primary">
+                      <div class="row">
+                        <div class="col-10">
+                          <h4 class="card-title mt-0">{{datos.equipo}}</h4>
+                          <p class="card-category">LISTA DE JUGADORES</p>
+                        </div>
+                        <div class="col-2">
+                          <button class="btn btn-light" title="FICHAS DE EQUIPO" (click)="visualizar(3,0)"><i class="fas fa-folder"></i></button>
+                          <button class="btn btn-light" title="REPORTE DE MI EQUIPO" (click)="visualizar(1,0)"><i class="fas fa-file-download"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                          <thead class="">
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Fecha nacimiento</th>
+                            <th>Telefono padre</th>
+                            <th>Telefono madre</th>
+                            <th>Acciones</th>
+                          </thead>
+                          <tbody *ngIf="datos.jugadores.length > 0; else pintaVacio">
+                            <tr *ngFor="let jugador of datos.jugadores">
+                              <td>{{jugador.JugadorID}}</td>
+                              <td>{{jugador.nombre}}</td>
+                              <td>{{jugador.FechaNacimiento}}</td>
+                              <td>{{jugador.TelPadre}}</td>
+                              <td>{{jugador.TelMadre}}</td>
+                              <td>
+                                <button class="btn btn-warning" title="REPORTE DEL JUGADOR" (click)="visualizar(2,jugador.JugadorID)"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-danger" title="ELIMINAR JUGADOR" (click)="eliminarJugador(jugador.JugadorID)"><i class="far fa-trash-alt"></i></button>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <ng-template #pintaVacio>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">Aun no has registrado tus jugadores</td>
+                                </tr>
+                            </tbody>
+                          </ng-template>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h2 *ngIf="tipoModal == 1">Editar Representante</h2>
+    <h2 *ngIf="tipoModal == 2">Editar Entrenador</h2>
+    <h2 *ngIf="tipoModal == 3">Editar Ayudante</h2>
+  </div>
+  <div class="modal-body">
+      <div class="form">
+        <div class="form-row">
+          <div class="col-md-10">
+            <div>
+              <label for="formFile" class="form-label">Subir fotografía</label>
+              <input #myInput class="form-control" type="file" accept=".jpg" (change)="cambiarImagen($event)" name="file">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <br>
+            <button class="btn btn-primary"><i class="fas fa-camera" (click)="tomarFoto()" style="cursor: pointer;" title="Tomar foto"></i></button>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-sm-12 col-lg-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Apellido paterno *</label>
+              <input type="text" class="form-control" [disabled]="form" [(ngModel)]="datos_edit.apellido_p" name="cp" style="text-transform: uppercase;" maxlength="50" required>
+            </div>
+          </div>
+          <div class="col-sm-12 col-lg-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Apellido materno</label>
+              <input type="text" class="form-control" [disabled]="form" [(ngModel)]="datos_edit.apellido_m" name="cp" style="text-transform: uppercase;" maxlength="50">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="bmd-label-floating">Nombre (s) *</label>
+              <input type="text" class="form-control" [disabled]="form" [(ngModel)]="datos_edit.nombre" name="cp" style="text-transform: uppercase;" maxlength="50" required>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="bmd-label-floating">CURP</label>
+              <input type="text" class="form-control" [disabled]="form" [(ngModel)]="datos_edit.curp" name="cp" maxlength="18" style="text-transform: uppercase;">
+            </div>
+          </div>
+          <div class="col-sm-12 col-lg-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Correo</label>
+              <input type="text" class="form-control" [disabled]="form" [(ngModel)]="datos_edit.correo" name="cp" maxlength="50">
+            </div>
+          </div>
+          <div class="col-sm-12 col-lg-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Telefono *</label>
+              <input type="text" class="form-control" [disabled]="form" [(ngModel)]="datos_edit.tel" name="cp" style="text-transform: uppercase;" maxlength="10" required>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-danger" (click)="modal.close('Save click')"><i class="far fa-times-circle"></i> Cancelar</button>
+      <button class="btn btn-success" (click)="modificar()"><i class="far fa-check-circle"></i> Continuar</button>
+  </div>
+</ng-template>
+<ng-template #modal_camera let-camera>
+  <div class="modal-header">
+      <h2 class="modal-title" id="tituloModal">Tomar fotografia</h2>
+  </div>
+  <div class="modal-body">
+      <div class="container">
+          <div class="row">
+              <div *ngIf="isCameraExist; else noCameraExist" class="col-12">
+                  <div class="border border-success rounded text-center" style="width: 100%;height: 265px;">
+                      <webcam [height]="450" [width]="350" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+                      *ngIf="showWebcam" [switchCamera]="nextWebcamObservable"></webcam>
+                  </div>
+              
+                  <div *ngIf="errors.length > 0">
+                      <h4>Error Messages:</h4>
+                      <ul *ngFor="let error of errors">
+                          <li>{{ error | json }}</li>
+                      </ul>
+                  </div>
+              </div>
+              
+              <ng-template #noCameraExist>
+                  <div class="border border-danger rounded text-center" style="display: flex;justify-content: center;align-items: center;width: 450px;height: 350px;">
+                      Este dispositivo no cuenta con una camara disponible
+                  </div>
+              </ng-template>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-warning" (click)="camera.close()">Cerrar</button>
+      <button *ngIf="isCameraExist" type="button" class="btn btn-success" (click)="takeSnapshot()">Tomar foto</button>
+  </div>
+</ng-template>
