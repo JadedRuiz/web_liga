@@ -13,6 +13,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WebcamModule } from 'ngx-webcam';
 import { LigayucatanModule } from './ligayucatan/ligayucatan.module';
+import {MatSelectModule} from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { LigayucatanModule } from './ligayucatan/ligayucatan.module';
     BrowserAnimationsModule,
     HttpClientModule,
     WebcamModule,
-    LigayucatanModule
+    LigayucatanModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy }
