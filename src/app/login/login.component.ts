@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
       }
     })
   }
+  
   Login(){
     this.registro_service.login(this.login)
     .subscribe((object : any) => {

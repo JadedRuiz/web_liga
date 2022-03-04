@@ -54,6 +54,7 @@ export class RegistroComponent implements OnInit {
       }
     });
   }
+
   enviar(){
     if(this.json.recibo != ""){
       this.confirmar("Confirmación","¿Estas seguro de enviar la inscripción?","info",1);
@@ -61,6 +62,7 @@ export class RegistroComponent implements OnInit {
       Swal.fire("Ha ocurrido un error","No se puede enviar una solicitud sin recibo de pago","error");
     }
   }
+
   convertirImagenAB64(fileInput : any){
     return new Promise(function(resolve, reject) {
       let b64 = "";
@@ -87,6 +89,7 @@ export class RegistroComponent implements OnInit {
       }
     }
   }
+
   confirmar(title : any ,texto : any ,tipo_alert : any,tipo : number){
     Swal.fire({
       title: title,
@@ -113,6 +116,7 @@ export class RegistroComponent implements OnInit {
       }
     });
   }
+  
   limpiarCampos(){
     this.json = {
       recibo : "",

@@ -31,12 +31,12 @@
             <div class="col-3 paralelograma" style="background-color: #35363C;">
             </div>
             <div class="col-4">
-              <div (click)="open(contentReg)" class="row justify-content-end">
-                <div class="col-4 d-flex align-items-center log-reg" style="cursor: pointer;">
+              <div class="row justify-content-end">
+                <div  (click)="openModal(2)" class="col-4 d-flex align-items-center log-reg" style="cursor: pointer;">
                   <i class="fas fa-pencil-alt" style="color: #FCEF57;"></i>
                   <p class="text-one text-white my-0 f12 ml-2 nv-n">REGISTRO</p>
                 </div>
-                <div (click)="open(content)" class="col-3 d-flex align-items-center border-left log-reg" style="cursor: pointer;">
+                <div (click)="openModal(1)" class="col-3 d-flex align-items-center border-left log-reg" style="cursor: pointer;">
                   <i class="fas fa-sign-in-alt" style="color: #FCEF57;"></i>
                   <p class="text-one text-white my-0 ml-2 f12 nv-n">INGRESAR</p>
                 </div>
@@ -72,7 +72,7 @@
           </div>
         </nav>
     </section>
-    <nav class="navbar-dark bg-dark navbar-expand-lg sticky-top py-3 my-0" style="background-color: #2C2D31 !important;">
+    <nav class="navbar-dark bg-dark navbar-expand-lg py-3" style="background-color: #2C2D31 !important;">
         <div class="collapse navbar-collapse container" id="navbarSupportedContent">
           <ul class="navbar-nav nv-n mr-auto">
             <li class="nav-item nv-i">
@@ -127,17 +127,17 @@
         </ng-template>
       </ngb-carousel>
     </div>
-    <section class="mainPage py-5"  style="background-color: #EDEFF4;">
+    <section class="mainPage py-5 border px-lg-0 px-2"  style="background-color: #EDEFF4;">
       <div class="container">
         <div class="row justify-content-between">
             <div class="col-md-12 col-lg-8">
-                <div class="row border-bottom">
+                <div class="row border-bottom pb-2 pb-lg-0">
                     <div class="col-lg-7 col-sm-12">
                         <p class="borde-left text-one-sub f18">ULTIMOS RESULTADOS</p>
                     </div>
                     <div class="col-lg-5 col-sm-12">
-                        <div class="row justify-content-end">
-                            <div class="col-4 mr-4">
+                        <div class="row btns_filtros">
+                            <div class="col-4 mr-lg-4">
                               <div ngbDropdown class="d-inline-block">
                                 <button class="aunt_select text-one f12" id="dropdownBasic1" ngbDropdownToggle>TEMPORADA</button>
                                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -159,36 +159,36 @@
                     </div>
                 </div>
                 <div class="row justify-content-center mt-3">
-                  <div *ngFor="let lastGame of lastesdGames" class="col-12 bg-white mt-2" style="height: 400px;;">
+                  <div *ngFor="let lastGame of lastesdGames" class="col-12 bg-white mt-2 border alturaClass">
                       <div class="row">
-                        <div class="col-12 text-one-sub f14 text-center mt-5" style="color: #9B9B9B;">{{lastGame.ubicacion}}</div>
+                        <div class="col-12 text-one-sub f14 text-center mt-2 mt-lg-5 titulo1_div">{{lastGame.ubicacion}}</div>
                       </div>
                       <div class="row">
-                        <div class="col-12 text-one-sub text-center mt-1" style="color: #151515;font-size: 33px;">{{lastGame.temporada}}</div>
+                        <div class="col-12 text-one-sub text-center mt-1 titulo2_div">{{lastGame.temporada}}</div>
                       </div>
-                      <div class="row mt-3 d-flex justify-content-center align-items-center">
-                        <div class="col-3 border text-center" style="height: 175px;">
-                          <img class="mt-4" [src]="lastGame.equipo_1.logo" style="width: 100px;height : 100px;">
-                          <p class="text-one f14 mt-2">{{lastGame.equipo_1.equipo}}</p>
+                      <div class="row mt-3 div_img">
+                        <div class="col-3 border text-center marco_img">
+                          <img class="mt-4 img_div" [src]="lastGame.equipo_1.logo">
+                          <p class="text-one mt-2 text_img">{{lastGame.equipo_1.equipo}}</p>
                         </div>
-                        <div class="col-3">
-                          <div class="row px-3">
+                        <div class="col-4">
+                          <div class="row px-lg-3 px-0">
                             <div class="col-6 text-start">
-                              <p *ngIf="lastGame.equipo_1.win"style="color: #35ad79;font-size: 60px;font-weight: 400;">{{lastGame.equipo_1.carreras}}</p>
-                              <p *ngIf="!lastGame.equipo_1.win" style="color: #9B9B9B;font-size: 60px;font-weight: 400;">{{lastGame.equipo_1.carreras}}</p>
+                              <p *ngIf="lastGame.equipo_1.win" class="marcador_green">{{lastGame.equipo_1.carreras}}</p>
+                              <p *ngIf="!lastGame.equipo_1.win" class="marcador_gray">{{lastGame.equipo_1.carreras}}</p>
                             </div>
                             <div class="col-6 text-end">
-                              <p *ngIf="lastGame.equipo_2.win" style="color: #35ad79;font-size: 60px;font-weight: 400;">{{lastGame.equipo_2.carreras}}</p>
-                              <p *ngIf="!lastGame.equipo_2.win" style="color: #9B9B9B;font-size: 60px;font-weight: 400;">{{lastGame.equipo_2.carreras}}</p>
+                              <p *ngIf="lastGame.equipo_2.win" class="marcador_green">{{lastGame.equipo_2.carreras}}</p>
+                              <p *ngIf="!lastGame.equipo_2.win" class="marcador_gray">{{lastGame.equipo_2.carreras}}</p>
                             </div>
                           </div>
                           <div class="row d-flex justify-content-center">
                             <hr class="linea"><div class="circle">VS</div><hr class="linea">
                           </div>
                         </div>
-                        <div class="col-3 border text-center" style="height: 175px;">
-                          <img class="mt-4" [src]="lastGame.equipo_2.logo" style="width: 100px;height : 100px;">
-                          <p class="mt-2 text-one f14">{{lastGame.equipo_2.equipo}}</p>
+                        <div class="col-3 border text-center marco_img" style="height: 175px;">
+                          <img class="mt-4 img_div" [src]="lastGame.equipo_2.logo">
+                          <p class="mt-2 text-one text_img">{{lastGame.equipo_2.equipo}}</p>
                         </div>
                       </div>
                   </div>
@@ -222,7 +222,7 @@
                             <p>{{posicion.position}}</p>
                           </td>
                           <td style="vertical-align: middle;">
-                            <img [src]="posicion.foto" class="object-fit: cover;object-position: center center;" width="41" height="41">
+                            <img [src]="posicion.foto" class="img_table">
                           </td>
                           <td class="text-one-sub f14" style="vertical-align: middle;">
                             <p>{{posicion.equipo}}</p>
@@ -291,8 +291,8 @@
       </div>
     </section>
     <footer style="background-color: #35363C;">
-      <div class="container info">
-        <div class="row pt-5 pb-3">
+      <div class="container">
+        <div class="row py-3">
           <div class="col-lg-5 col-sm-12">
             <div class="row">
               <div class="col-3">
@@ -305,15 +305,15 @@
             <div class="row text-start justify-content-center align-items-center">
               <h3 class="f18 text-one-sub" style="color: #707279 ;">CONTACTANOS</h3>
               <div class="col-6">
-                <p class="f14"><i class="far fa-envelope" style="color: #35AD79;font-size: 24px;"></i>&nbsp; aquivaelcorreo@gmail.com</p>
+                <p class="f14" style="color: #707279;"><i class="far fa-envelope" style="color: #35AD79;font-size: 24px;"></i>&nbsp; aquivaelcorreo@gmail.com</p>
               </div>
               <div class="col-5">
-                <p class="f14"><i class="fas fa-phone" style="color: #35AD79;font-size: 24px;"></i>&nbsp; +52 981 159 2659</p>
+                <p class="f14" style="color: #707279;"><i class="fas fa-phone" style="color: #35AD79;font-size: 24px;"></i>&nbsp; +52 981 159 2659</p>
               </div>
             </div>
           </div>
           <div class="col-lg-6 col-sm-12">
-            <h2 class="text-one-sub f18 text-start">BUZÓN DE SUGERENCIAS</h2>
+            <h2 class="text-one-sub f18 text-start text-white">BUZÓN DE SUGERENCIAS</h2>
             <div class="row">
               <div class="form-group col-sm-6">
                 <div class="help-block with-errors"></div>
@@ -352,7 +352,7 @@
     </footer>
 </body>
 </html>
-<ng-template #content let-modal>
+<ng-template #contentLogin let-modal>
     <div class="container-fluid mx-0 py-0" style="background-color: #EDEFF4;">
       <div class="row">
         <div class="col-12 header_mod">
@@ -383,7 +383,7 @@
                       <p class="mb-0" (click)="openModal()">Recupera tu contraseña  <a href="#">aquí</a></p>
                   </div>
                   <div class="col-12 text-center">
-                      <button type="submit" class="btn text-white btn-sm" style="background-color: #35AD79;" (click)="Login()">Iniciar sesión</button>
+                      <button class="btn text-white btn-sm" style="background-color: #35AD79;" (click)="Login()">Iniciar sesión</button>
                   </div>
               </form>
             </div>
@@ -397,7 +397,7 @@
       </div>
     </div>
 </ng-template>
-<ng-template #contentReg let-modalReg>
+<ng-template #modalReg let-modalReg>
   <div class="container-fluid mx-0 py-0" style="background-color: #EDEFF4;">
     <div class="row">
       <div class="col-12 header_mod">
@@ -427,7 +427,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="row align-items-center">
-                                        <div class="col-11">
+                                        <div class="col-10">
                                             <label for="formFile" class="form-label">Recibo de pago</label>
                                             <input class="form-control" type="file" accept=".jpg" (change)="cambiarImagen($event)" name="file">
                                         </div>
@@ -453,11 +453,11 @@
                     <mat-tab label="REPRESENTANTE">
                         <div class="container mt-2">
                             <div class="row">
-                                <div class="col-lg-6 col-sm-12 form-group">
+                                <div class="col-md-12 col-lg-6 form-group">
                                     <label for="formFile" class="form-label">CURP</label>
                                     <input class="form-control" type="text" [(ngModel)]="json.curp" style="text-transform: uppercase;" maxlength="18" required name="curp">
                                 </div>
-                                <div class="col-lg-6 col-sm-12 form-group">
+                                <div class="col-md-12 col-lg-6 form-group">
                                     <label for="formFile" class="form-label">Telefono</label>
                                     <input class="form-control" type="text" [(ngModel)]="json.telefono" style="text-transform: uppercase;" maxlength="10" name="telefono">
                                 </div>
@@ -493,7 +493,7 @@
                   </mat-tab-group>
                 </div>
                 <div class="col-12 text-right mt-2">
-                    <button class="btn" style="background: #38b44a;" (click)="enviar()">Enviar inscripción</button>
+                    <button class="btn text-white btn-sm" style="background-color: #35AD79;" (click)="enviar()">Enviar inscripción</button>
                 </div>
               </div>
             </div>
@@ -506,5 +506,106 @@
         <strong class="text-center mb-0">Aviso : Tu solicitud de inscripción será revisada, te llegará un correo de confirmación para que puedas acceder a la plataforma</strong>
       </div>
     </div>
+  </div>
+</ng-template>
+<ng-template #modal_camera let-camera>
+  <div class="modal-header">
+      <h2 class="modal-title" id="tituloModal">Tomar fotografia</h2>
+  </div>
+  <div class="modal-body">
+      <div class="container">
+          <div class="row">
+              <div *ngIf="isCameraExist; else noCameraExist" class="col-12">
+                  <div class="border border-success rounded text-center" style="width: 100%;height: 265px;">
+                      <webcam [height]="450" [width]="350" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+                      *ngIf="showWebcam" [switchCamera]="nextWebcamObservable"></webcam>
+                  </div>
+              
+                  <div *ngIf="errors.length > 0">
+                      <h4>Error Messages:</h4>
+                      <ul *ngFor="let error of errors">
+                          <li>{{ error | json }}</li>
+                      </ul>
+                  </div>
+              </div>
+              
+              <ng-template #noCameraExist>
+                  <div class="border border-danger rounded text-center" style="display: flex;justify-content: center;align-items: center;width: 450px;height: 350px;">
+                      Este dispositivo no cuenta con una camara disponible
+                  </div>
+              </ng-template>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-warning" (click)="camera.close()">Cerrar</button>
+      <button *ngIf="isCameraExist" type="button" class="btn btn-success" (click)="takeSnapshot()">Tomar foto</button>
+  </div>
+</ng-template>
+<ng-template #recuperar let-modalRecupera>
+  <div class="modal-header">
+    <h2>Recuperación de la contraseña</h2>
+  </div>
+  <div class="modal-body">
+      <div class="container my-2">
+          <div class="row">
+              <div class="col">
+                  <div class="input-group mb-3">
+                      <input type="email" [(ngModel)]="correo" class="form-control" placeholder="Ingresa el correo con el que te has registrado" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                      <div class="input-group-append my-0 py-0">
+                        <button class="btn btn-success my-0 py-0" type="button" (click)="recuperarContra()"><i class="fas fa-search"></i></button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row" [hidden]="mostrarInfo">
+              <div class="col-sm-12">
+                  <div class="card rounded border border-success w-100" style="width: 18rem;" *ngIf="tipo == 1">
+                      <div class="card-body">
+                        <h5 class="card-title">Hemos encontrado su cuenta</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Valida la información</h6>
+                        <p class="card-text">
+                            EQUIPO : {{info.equipo}}
+                            <br>
+                            REPRESENTANTE :  {{info.nombre}}
+                            <br>
+                            TELEFONO :  {{info.telefono}}
+                            <br>
+                            CORREO :  {{info.correo}}
+                        </p>
+                        <a href="#" class="card-link btn-sm float-right" title="Enviar contraseña a correo" style="font-size: 24px;" (click)="enviarContra(0)"><i class="fas fa-envelope-open-text"></i></a>
+                      </div>
+                  </div>
+                  <div class="card rounded border border-danger w-100" style="width: 18rem;" *ngIf="tipo == 2">
+                      <div class="card-body">
+                        <h5 class="card-title">Lo sentimos, no hemos encontrado su cuenta</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Sin embargo hemos encontrado coincidencias con el usuario proporcionado</h6>
+                        <div class="card-text">
+                              <div *ngFor="let con of coincidencias" class="row align-items-center border-bottom">
+                                <div class="col-10">
+                                  EQUIPO : {{con.Equipo}}
+                                  <br>
+                                  REPRESENTANTE :  {{con.nombre}}
+                                  <br>
+                                  TELEFONO :  {{con.TelRep}}
+                                  <br>
+                                  CORREO :  {{con.MailRep}}
+                                </div>
+                                <div class="col-2">
+                                  <a href="#" class="card-link btn-sm float-right" title="Enviar contraseña a correo" style="font-size: 24px;" (click)="enviarContra(con.UsuarioID)"><i class="fas fa-envelope-open-text"></i></a>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-12">
+                  <small class="text-warning">**IMPORTANTE**  Si el correo no te llega comunicate con el administrador del sistema</small>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-danger" (click)="closeModal(3)"><i class="far fa-times-circle"></i> Cerrar</button>
   </div>
 </ng-template>
