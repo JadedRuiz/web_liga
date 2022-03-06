@@ -5,8 +5,8 @@ import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 
 const routes: Routes = [
-  { path : "", component : InicioComponent},
   { path : "login", component : LoginComponent},
+  { path : "landingPage", component : InicioComponent},
   { path : "registro", component : RegistroComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];

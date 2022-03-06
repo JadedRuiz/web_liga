@@ -1,10 +1,16 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgbCarousel, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { data } from 'jquery';
 import { RegistroService } from '../services/registro.service';
 import { LoginService } from '../services/login.service';
 import { RolJuegosService } from '../services/roljuegos.service';
 import { InicioService } from '../services/inicio.service';
+import { EventEmitter } from 'stream';
+import { WebcamInitError } from 'ngx-webcam';
+import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -32,12 +38,59 @@ export class InicioComponent implements OnInit {
   jornada_vista = "";
 
   @ViewChild('carousel', {static : true}) carousel: NgbCarousel;
+  @ViewChild('contentLogin', {static : true}) modal_login: any;
+  @ViewChild('modalReg', {static : true}) modal_registro: any;
+  modal_close_login : any;
+  modal_close_registro : any;
+  //Varaibles modal login
+  login = {
+    usuario : "",
+    contra : ""
+  };
+  correo = "";
+  info = {
+    nombre : "",
+    telefono : "",
+    equipo : "",
+    correo : "",
+    usuario_id : 0
+  };
+  //Variables modal registro
+  categorias : any;
+  json = {
+    recibo : "",
+    extension : "",
+    equipo : "",
+    CategoriaID : 0,
+    curp : "",
+    apellido_p : "",
+    apellido_m : "",
+    nombres : "",
+    telefono : "",
+    correo : "",
+    usuario : "",
+    contra : ""
+  };
+  @ViewChild('modal_camera', {static: false}) modalCamera : any;
+  camera : any;
+  @Output() getPicture = new EventEmitter<WebcamImage>();
+  showWebcam = true;
+  isCameraExist = true;
+  errors: WebcamInitError[] = [];
+  private trigger: Subject<void> = new Subject<void>();
+  private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
+  @ViewChild('recuperar',{}) modal;
+  mostrarInfo = true;
+  tipo = 0;
+  modal_obj : any;
+  coincidencias : any;
 
   constructor(
     private modalService: NgbModal,
     private login_service : LoginService,
     private registro_service : RegistroService,
-    private roljuegos_service : RolJuegosService
+    private roljuegos_service : RolJuegosService,
+    private router : Router
   ) {  }
 
   ngOnInit(): void {
@@ -179,5 +232,195 @@ export class InicioComponent implements OnInit {
   
   prev(){
     this.carousel.prev();
+  }
+
+  mostrarCategorias(){
+    this.categorias = [];
+    this.registro_service.catalogoCategorias()
+    .subscribe((object : any) => {
+      if(object.ok){
+        this.categorias = object.data;
+      }
+    });
+  }
+
+  enviar(){
+    if(this.json.recibo != ""){
+      this.confirmar("Confirmación","¿Estas seguro de enviar la inscripción?","info",1,null);
+    }else{
+      Swal.fire("Ha ocurrido un error","No se puede enviar una solicitud sin recibo de pago","error");
+    }
+  }
+
+  convertirImagenAB64(fileInput : any){
+    return new Promise(function(resolve, reject) {
+      let b64 = "";
+      const reader = new FileReader();
+      reader.readAsDataURL(fileInput);
+      reader.onload = (e: any) => {
+          b64 = e.target.result.split("base64,")[1];
+          resolve(b64);
+      };
+    });
+  }
+
+  cambiarImagen(event: any){
+    if (event.target.files && event.target.files[0]) {
+      let archivos = event.target.files[0];
+      let extension = archivos.name.split(".")[1];
+      if(extension == "jpg" || extension == "png"){
+        this.convertirImagenAB64(archivos).then( respuesta => {
+          this.json.recibo = respuesta+"";
+          this.json.extension = extension;
+        });
+      }else{
+        Swal.fire("Ha ocurrido un error","Tipo de imagen no permitida","error");
+      }
+    }
+  }
+
+  Login(){
+    this.registro_service.login(this.login)
+    .subscribe((object : any) => {
+      if(object.ok){
+        window.sessionStorage.setItem("Perfil",object.data[0].tipo);
+        if(object.data[0].tipo != "admin"){
+          window.sessionStorage.setItem("InscripcionID",object.data[0].InscripcionID);
+          window.sessionStorage.setItem("UsuarioID",object.data[0].UsuarioID);
+          this.router.navigate(['/ligayucatan/inicio']);
+        }else{
+          this.router.navigate(['/ligayucatan/inscripcion']);
+        }
+        this.closeModal(1);
+      }else{
+        Swal.fire("Ha ocurrido un error",object.message,"error");
+      }
+    })
+  }
+
+  recuperarContra(){
+    this.coincidencias = [];
+    this.registro_service.recuperarContra({correo : this.correo})
+    .subscribe((object : any) => {
+      if(object.ok){
+        if(object.data.tipo == 1){
+          this.mostrarInfo = false;
+          this.tipo = 1;
+          this.info.usuario_id = object.data.data[0].UsuarioID;
+          this.info.nombre = object.data.data[0].nombre;
+          this.info.equipo = object.data.data[0].Equipo;
+          this.info.telefono = object.data.data[0].TelRep;
+          this.info.correo = object.data.data[0].MailRep;
+        }else{
+          if(object.data.tipo == 2){
+            this.mostrarInfo = false;
+            this.tipo = 2;
+            this.coincidencias = object.data.data;
+          }else{
+            this.mostrarInfo = false;
+            Swal.fire("Ha ocurrido un error","No hemos encontrado ningun usaurio en está temporada con el correo proporcionado","error");
+          }
+        }
+        
+      }
+    });
+  }
+  
+  enviarContra(dato : any){
+    if(dato == 0){
+      dato = this.info.usuario_id;
+    }
+    this.confirmar("Confirmación","¿Sus datos concuerdan con el correo asociado?","info",2, dato);
+  }
+
+  confirmar(title : any ,texto : any ,tipo_alert : any,tipo : number, dato : any){
+    Swal.fire({
+      title: title,
+      text: texto,
+      icon: tipo_alert,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, estoy seguro',
+      cancelButtonText : "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if(tipo == 1){  //enviar
+          this.registro_service.enviar(this.json)
+          .subscribe((object : any) => {
+            if(object.ok){
+              this.limpiarCamposRegistro();
+              this.closeModal(2);
+              Swal.fire("Buen trabajo","La solicitud se ha enviado con exito","success");
+            }else{
+              Swal.fire("Ha ocurrido un error",object.message,"error");
+            }
+          });
+        }
+        if(tipo == 2){  //Recuperar contra
+          this.registro_service.enviarContra(dato)
+          .subscribe((object : any) => {
+            if(object.ok){
+              this.formatear();
+              Swal.fire("Buen trabajo",object.data,"success");
+            }
+          });
+        }
+      }
+    });
+  }
+
+  formatear(){
+    this.mostrarInfo = true;
+    this.tipo = 0;
+    this.correo = "";
+    this.info = {
+      nombre : "",
+      telefono : "",
+      equipo : "",
+      correo : "",
+      usuario_id : 0
+    };
+  }
+
+  limpiarCamposRegistro(){
+    this.json = {
+      recibo : "",
+      extension : "",
+      equipo : "",
+      CategoriaID : 0,
+      curp : "",
+      apellido_p : "",
+      apellido_m : "",
+      nombres : "",
+      telefono : "",
+      correo : "",
+      usuario : "",
+      contra : ""
+    };
+  }
+
+  tomarFoto(){
+    this.camera = this.modalService.open(this.modalCamera, { scrollable: true, size: 'md', centered: true, backdrop: 'static', keyboard: false });
+  }
+  takeSnapshot(): void {
+    this.trigger.next();
+  }
+
+  handleImage(webcamImage: WebcamImage) {
+    this.getPicture.emit(webcamImage);
+    let url_foto = webcamImage.imageAsDataUrl;
+    let docB64 = url_foto.split(",");
+    this.json.recibo = docB64[1];
+    this.json.extension = "jpeg";
+    this.camera.close();
+  }
+
+  get triggerObservable(): Observable<void> {
+    return this.trigger.asObservable();
+  }
+
+  get nextWebcamObservable(): Observable<boolean | string> {
+    return this.nextWebcam.asObservable();
   }
 }
