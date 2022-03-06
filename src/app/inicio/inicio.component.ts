@@ -1,38 +1,57 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgbCarousel, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { data } from 'jquery';
+import { RegistroService } from '../services/registro.service';
 import { LoginService } from '../services/login.service';
+import { RolJuegosService } from '../services/roljuegos.service';
+import { InicioService } from '../services/inicio.service';
+
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.css']
+  styleUrls: ['./inicio.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class InicioComponent implements OnInit {
 
   Imagedata : any; 
   PremiosData : any;
   Partidos : any;
+  Jornadas : any;
   Temporadas : any;
+  Categorias : any;
   Fechas : any;
   TablaPosicion : any;
   lastesdGames : any;
   temporadaa = "";
+  categoriaID = 4;
+  temporadaID = 22;
+  roljuegoID = 0;
+  jornadaID = 269;
+  jornada_vista = "";
+
   @ViewChild('carousel', {static : true}) carousel: NgbCarousel;
 
   constructor(
     private modalService: NgbModal,
     private login_service : LoginService,
+    private registro_service : RegistroService,
+    private roljuegos_service : RolJuegosService
   ) {  }
 
   ngOnInit(): void {
+    this.obtenerJornadaActual();
     this.getTemporadaActual();
     this.recuperarImagenes();
     this.recuperarPartidos();
     this.obtenerCatalogoTemporadas();
-    this.buscarFechas(1);
+    this.buscarJornadas();
     this.recuperaTablaPosiciones();
     this.recuperarPremios();
-    this.buscarJuegosFiltro();
+    //this.buscarJuegosFiltro();
+    this.obtenerCategorias();
+    this.buscarPartidos();
   }
   
   getTemporadaActual(){
@@ -46,12 +65,25 @@ export class InicioComponent implements OnInit {
     })
   }
 
+  obtenerJornadaActual(){
+    this.roljuegos_service.obtenerJornadaActivo()
+    .subscribe((object : any) => {
+      if(object.ok){
+        this.temporadaID = object.data.TemporadaID;
+        this.jornadaID = object.data.Representante;
+        this.jornada_vista = object.data.Jornada_Vista;
+      }else{
+        this.jornada_vista = object.message;
+      }
+    })
+  }
+
   recuperarImagenes(){
     this.Imagedata = [
-      `http://127.0.0.1/api_liga/storage/carousel/sidebar-1.jpg`,
-      `http://127.0.0.1/api_liga/storage/carousel/sidebar-2.jpg`,
-      `http://127.0.0.1/api_liga/storage/carousel/sidebar-3.jpg`,
-      `http://127.0.0.1/api_liga/storage/carousel/sidebar-4.jpg`
+      `https://apiliga.reydelosdeportes.com.mx/storage/carousel/sidebar-1.jpg`,
+      `https://apiliga.reydelosdeportes.com.mx/storage/carousel/sidebar-2.jpg`,
+      `https://apiliga.reydelosdeportes.com.mx/storage/carousel/sidebar-3.jpg`,
+      `https://apiliga.reydelosdeportes.com.mx/storage/carousel/sidebar-4.jpg`
     ];
   }
 
@@ -64,13 +96,21 @@ export class InicioComponent implements OnInit {
   }
 
   recuperaTablaPosiciones(){
-    this.TablaPosicion = [
-      { position : 1, foto : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-1.png", equipo : "SPORTLAND", wins : "153", loses : "30", points : "186"},
-      { position : 2, foto : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-2.png", equipo : "DREAM TEAM", wins : "120", loses : "30", points : "186"},
-      { position : 3, foto : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-3.jpg", equipo : "REAL MADRID", wins : "100", loses : "30", points : "186"},
-      { position : 4, foto : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-4.jpg", equipo : "CELTA VIGO", wins : "98", loses : "30", points : "186"},
-      { position : 5, foto : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-5.jpg", equipo : "BARCELONA", wins : "98", loses : "30", points : "186"}
-    ]
+    let json = {
+      TemporadaID : this.temporadaID,
+      CategoriaID : this.categoriaID
+    };
+    this.TablaPosicion = [];
+    this.roljuegos_service.obtenerStanding(json)
+    .subscribe((object : any) => {
+      if(object.ok){
+        this.TablaPosicion = object.data;
+      }
+    });
+
+    //this.TablaPosicion = [
+    //  { position : 1, foto : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-1.png", equipo : "SPORTLAND", wins : "153", loses : "30", points : "186"}
+    //]
   }
 
   recuperarPremios(){
@@ -89,55 +129,46 @@ export class InicioComponent implements OnInit {
     ]
   }
 
-  buscarFechas(id : number){
-    if(id == 1){
-      this.Fechas = ["12/01/2022","15/01/2022","18/01/2022"];
-    }
-    if(id == 2){
-      this.Fechas = ["22/02/2022","25/02/2022","28/02/2022"];
-    }
-    if(id == 3){
-      this.Fechas = ["05/03/2022","05/03/2022","08/03/2022"];
-    }
-  }
-
-  buscarJuegosFiltro(){
-    this.lastesdGames = [
-      { ubicacion : "NEW YORKERS STADIUM - APRIL 15, 2020", temporada : "TORNENO VERANO 2022",
-        equipo_1 : {
-          equipo : "SPORTLAND",
-          logo : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-1.png",
-          carreras : 2,
-          win : true
-        },
-        equipo_2 : {
-          equipo : "DREAM TEAM",
-          logo : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-2.png",
-          carreras : 1,
-          win : false
-        }
-      },
-      { ubicacion : "BAVARIA STADIUM - APRIL 15, 2020", temporada : "TORNENO VERANO 2022",
-        equipo_1 : {
-          equipo : "REAL MADRID",
-          logo : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-3.jpg",
-          carreras : 2,
-          win : true
-        },
-        equipo_2 : {
-          equipo : "TOROS",
-          logo : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-4.jpg",
-          carreras : 1,
-          win : false
-        }
+  obtenerCategorias(){
+    this.Categorias = [];
+    this.registro_service.catalogoCategorias()
+    .subscribe((object : any) => {
+      if(object.ok){
+        this.Categorias = object.data;
       }
-    ]
+    });
+  }
+  mostrarCategoria(catID: number){
+    this.categoriaID = catID;
+    
+
+    alert("Categoria " + catID);
+  }
+  
+  buscarJornadas(){
+    this.Jornadas = [];
+    this.roljuegos_service.obtenerJornadas()
+    .subscribe((object : any) => {
+      if(object.ok){
+        this.Jornadas = object.data;
+      }
+    });
   }
 
-  seleccionarTemporada(id : number){
-    this.buscarFechas(id);
+  buscarPartidos(){
+    let json = {
+      JornadaID : this.jornadaID,
+      CategoriaID : this.categoriaID
+    };
+    this.lastesdGames = [];
+    this.roljuegos_service.obtenerResultados(json)
+    .subscribe((object : any) => {
+      if(object.ok){
+        this.lastesdGames = object.data;
+      }
+    });
   }
-
+  
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size : "md", centered : true, keyboard : false});
   }
