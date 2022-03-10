@@ -1,17 +1,15 @@
-import { Component, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ViewEncapsulation, EventEmitter } from '@angular/core';
 import { NgbCarousel, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { data } from 'jquery';
 import { RegistroService } from '../services/registro.service';
 import { LoginService } from '../services/login.service';
 import { RolJuegosService } from '../services/roljuegos.service';
 import { InicioService } from '../services/inicio.service';
-import { EventEmitter } from 'stream';
-import { WebcamInitError } from 'ngx-webcam';
-import { Subject } from 'rxjs';
+import { WebcamImage, WebcamInitError } from 'ngx-webcam';
+import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-inicio',
@@ -32,6 +30,7 @@ export class InicioComponent implements OnInit {
   lastesdGames : any;
   temporadaa = "";
   categoriaID = 4;
+  categoria = "";
   temporadaID = 22;
   roljuegoID = 0;
   jornadaID = 269;
@@ -97,14 +96,14 @@ export class InicioComponent implements OnInit {
     this.obtenerJornadaActual();
     this.getTemporadaActual();
     this.recuperarImagenes();
-    this.recuperarPartidos();
+    this.recuperarRol();
     this.obtenerCatalogoTemporadas();
     this.buscarJornadas();
-    this.recuperaTablaPosiciones();
     this.recuperarPremios();
     //this.buscarJuegosFiltro();
     this.obtenerCategorias();
-    this.buscarPartidos();
+    this.buscarPartidos(this.categoriaID, this.jornadaID);
+    this.recuperaTablaPosiciones();
   }
   
   getTemporadaActual(){
@@ -122,9 +121,9 @@ export class InicioComponent implements OnInit {
     this.roljuegos_service.obtenerJornadaActivo()
     .subscribe((object : any) => {
       if(object.ok){
-        this.temporadaID = object.data.TemporadaID;
-        this.jornadaID = object.data.Representante;
-        this.jornada_vista = object.data.Jornada_Vista;
+        this.temporadaID = object.data[0].TemporadaID;
+        this.jornadaID = object.data[0].JornadaID;
+        this.jornada_vista = object.data[0].Jornada_Vista;
       }else{
         this.jornada_vista = object.message;
       }
@@ -140,11 +139,11 @@ export class InicioComponent implements OnInit {
     ];
   }
 
-  recuperarPartidos(){
+  recuperarRol(){
     this.Partidos = [
-      { match : "TOROS VS DIABLOS ROJOS", fecha : "ABR 15, 2022"},
-      { match : "REAL FC VS LEONES", fecha : "MAR 22, 2022"},
-      { match : "MARIN FORCE VS SHICHIBUKAI", fecha : "FEB 13, 2022"}
+      { match : "", fecha : ""},
+      { match : "", fecha : ""}
+      //{ match : "MARIN FORCE VS SHICHIBUKAI", fecha : "FEB 13, 2022"}
     ]
   }
 
@@ -168,9 +167,9 @@ export class InicioComponent implements OnInit {
 
   recuperarPremios(){
     this.PremiosData = [
-      { titulo_amarillo : "MEJOR", titulo : "ENTRENADOR", fecha : "NOVIEMBRE 2021", foto_copa : "./assets/imagenes/copas/copa-2.png"},
-      { titulo_amarillo : "MEJOR", titulo : "JUGADOR", fecha : "NOVIEMBRE 2021", foto_copa : "./assets/imagenes/copas/copa-2.png"},
-      { titulo_amarillo : "CAMPEON", titulo : "", fecha : "NOVIEMBRE 2021", foto_copa : "./assets/imagenes/copas/copa-1.png"}
+      { titulo_amarillo : "MEJOR", titulo : "ENTRENADOR", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-1.jpg"},
+      { titulo_amarillo : "MEJOR", titulo : "JUGADOR", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-2.jpg"},
+      { titulo_amarillo : "CAMPEON", titulo : "", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-3.jpg"}
     ]
   }
 
@@ -192,10 +191,7 @@ export class InicioComponent implements OnInit {
     });
   }
   mostrarCategoria(catID: number){
-    this.categoriaID = catID;
-    
-
-    alert("Categoria " + catID);
+    this.buscarPartidos(catID, this.jornadaID);
   }
   
   buscarJornadas(){
@@ -208,16 +204,31 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  buscarPartidos(){
+  seleccionarJornadas(jornadaID:number){
+    this.buscarPartidos(this.categoriaID, jornadaID);
+    this.Jornadas = [];
+    this.roljuegos_service.obtenerJornadas()
+    .subscribe((object : any) => {
+      if(object.ok){
+        this.Jornadas = object.data;
+      }
+    });
+  }
+
+  buscarPartidos(busCategoriaID:number,busJornadaID:number){
     let json = {
-      JornadaID : this.jornadaID,
-      CategoriaID : this.categoriaID
+      JornadaID : busJornadaID,
+      CategoriaID : busCategoriaID
     };
     this.lastesdGames = [];
     this.roljuegos_service.obtenerResultados(json)
     .subscribe((object : any) => {
       if(object.ok){
         this.lastesdGames = object.data;
+        this.categoria = object.data[0].categoria;
+        this.categoriaID = busCategoriaID;
+        
+        
       }
     });
   }
@@ -422,5 +433,26 @@ export class InicioComponent implements OnInit {
 
   get nextWebcamObservable(): Observable<boolean | string> {
     return this.nextWebcam.asObservable();
+  }
+
+  openModal(tipo : any) {
+    
+    if(tipo == 1){
+      console.log(tipo);
+      this.modal_close_login = this.modalService.open(this.modal_login,{ size: 'md', centered : true, backdropClass : 'light-blue-backdrop'});
+    }
+    if(tipo == 2){
+      console.log(tipo);
+      this.modal_close_registro = this.modalService.open(this.modal_registro,{ size: 'md', centered : true, backdropClass : 'light-blue-backdrop'});
+    }
+  }
+
+  closeModal(tipo : any){
+    if(tipo == 1){
+      this.modal_close_login.close();
+    }
+    if(tipo == 2){
+      this.modal_close_registro.close();
+    }
   }
 }

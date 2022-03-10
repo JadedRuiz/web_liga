@@ -44,33 +44,35 @@
                         </div>
                     </div>
                 </div>
-                <nav class="navbar-dark bg-dark navbar-expand-lg" style="background-color: #35363C !important;">
-                    <div class="collapse container navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav pull-sm-left">
-                            <li class="nav-item mr-3">
-                                <a class="nav-link pl-2 pr-1 mx-1 py-2 my-n2" style="cursor: pointer;"><i class="fab fa-angrycreative" style="font-size: 60px;"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link pl-2 pr-1 mx-1 py-2 my-n2" style="cursor: pointer;"><i class="fab fa-apper" style="font-size: 60px;"></i></a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-logo mx-auto" style="z-index: 300;">
-                            <li class="nav-item" style="margin-top: -40px;">
-                                <a href="#" class="nav-link pl-2 pr-1 mx-1 py-2 my-n2">
-                                    <img src="./assets/logos/logo.png" alt="" style="width: 120px;">
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav pull-sm-right">
-                            <li class="nav-item mr-3">
-                                <a class="nav-link pl-2 pr-1 mx-1 py-2 my-n2" style="cursor: pointer;"><i class="fab fa-asymmetrik" style="font-size: 60px;"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link pl-2 pr-1 mx-1 py-2 my-n2" style="cursor: pointer;"><i class="fab fa-aws" style="font-size: 60px;"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+            </div>
+        </div>
+        <nav class="navbar-dark bg-dark navbar-expand-lg" style="background-color: #35363C !important;">
+            <div class="collapse container navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav pull-sm-left">
+                    <li class="nav-item mr-3">
+                        <a class="nav-link pl-2 pr-1 mx-1 py-2 my-n2" style="cursor: pointer;"><i class="fab fa-angrycreative" style="font-size: 60px;"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-2 pr-1 mx-1 py-2 my-n2" style="cursor: pointer;"><i class="fab fa-apper" style="font-size: 60px;"></i></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-logo mx-auto" style="z-index: 300;">
+                    <li class="nav-item" style="margin-top: -40px;">
+                        <a href="#" class="nav-link pl-2 pr-1 mx-1 py-2 my-n2">
+                            <img src="./assets/logos/logo.png" alt="" style="width: 120px;">
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pull-sm-right">
+                    <li class="nav-item mr-3">
+                        <a class="nav-link pl-2 pr-1 mx-1 py-2 my-n2" style="cursor: pointer;"><i class="fab fa-asymmetrik" style="font-size: 60px;"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-2 pr-1 mx-1 py-2 my-n2" style="cursor: pointer;"><i class="fab fa-aws" style="font-size: 60px;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </section>
     <nav class="navbar-dark bg-dark navbar-expand-lg py-3" style="background-color: #2C2D31 !important;">
         <div class="collapse navbar-collapse container" id="navbarSupportedContent">
@@ -93,7 +95,7 @@
                     </div>
                 </li>
                 <li class="nav-item nv-i">
-                    <a class="nav-link text-one f14">ESTADSITICAS</a>
+                    <a class="nav-link text-one f14">ESTADISTICAS</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-md-auto">
@@ -133,16 +135,25 @@
                 <div class="col-md-12 col-lg-8">
                     <div class="row border-bottom pb-2 pb-lg-0">
                         <div class="col-lg-7 col-sm-12">
-                            <p class="borde-left text-one-sub f18">ULTIMOS RESULTADOS</p>
+                            <p class="borde-left text-one-sub f18">RESULTADOS {{categoria}}</p>
                         </div>
                         <div class="col-lg-5 col-sm-12">
                             <div class="row btns_filtros">
                                 <div class="col-4 mr-lg-4">
                                     <div ngbDropdown class="d-inline-block">
-                                        <button class="aunt_select text-one f12" id="dropdownBasic1" ngbDropdownToggle>TEMPORADA</button>
+                                        <button class="aunt_select text-one f12" id="dropdownBasic1" ngbDropdownToggle>CATEGORIAS</button>
                                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                            <a class="f12 text-one" *ngFor="let temporada of Temporadas" (click)="seleccionarTemporada(temporada.id)" ngbDropdownItem>{{temporada.temporada}}
+                                            <a class="f12 text-one" *ngFor="let categoria of Categorias" (click)="mostrarCategoria(categoria.CategoriaID)" ngbDropdownItem>{{categoria.Categoria}}
                                   </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="aunt_select text-one f12" id="dropdownBasic1" ngbDropdownToggle>JORNADAS</button>
+                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <a class="f12 text-one" *ngFor="let jor of Jornadas" (click)="seleccionarJornadas(jor.JornadaID)" ngbDropdownItem>{{jor.Jornada_Vista}}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -150,27 +161,27 @@
                         </div>
                     </div>
                     <div class="row justify-content-center mt-3">
-                        <div *ngFor="let lastGame of lastesdGames" class="col-12 bg-white mt-2" style="height: 400px;;">
+                        <div *ngFor="let lastGame of lastesdGames" class="col-12 bg-white mt-2 border alturaClass">
                             <div class="row">
-                                <div class="col-12 text-one-sub f14 text-center mt-5" style="color: #9B9B9B;">{{lastGame.ubicacion}}</div>
+                                <div class="col-12 text-one-sub f14 text-center mt-2 mt-lg-5 titulo1_div">{{lastGame.ubicacion}}</div>
                             </div>
                             <div class="row">
-                                <div class="col-12 text-one-sub text-center mt-1" style="color: #151515;font-size: 33px;">{{lastGame.temporada}}</div>
+                                <div class="col-12 text-one-sub text-center mt-1 titulo2_div">{{lastGame.temporada}}</div>
                             </div>
-                            <div class="row mt-3 d-flex justify-content-center align-items-center">
-                                <div class="col-3 border text-center" style="height: 175px;">
-                                    <img class="mt-4" [src]="lastGame.equipo_1.logo" style="width: 100px;height : 100px;">
-                                    <p class="text-one f14 mt-2">{{lastGame.equipo_1.equipo}}</p>
+                            <div class="row mt-3 div_img">
+                                <div class="col-3 border text-center marco_img">
+                                    <img class="mt-4 img_div" [src]="lastGame.equipo_1.logo">
+                                    <p class="text-one mt-2 text_img">{{lastGame.equipo_1.equipo}}</p>
                                 </div>
-                                <div class="col-3">
-                                    <div class="row px-3">
+                                <div class="col-4">
+                                    <div class="row px-lg-3 px-0">
                                         <div class="col-6 text-start">
-                                            <p *ngIf="lastGame.equipo_1.win" style="color: #35ad79;font-size: 60px;font-weight: 400;">{{lastGame.equipo_1.carreras}}</p>
-                                            <p *ngIf="!lastGame.equipo_1.win" style="color: #9B9B9B;font-size: 60px;font-weight: 400;">{{lastGame.equipo_1.carreras}}</p>
+                                            <p *ngIf="lastGame.equipo_1.win" class="marcador_green">{{lastGame.equipo_1.carreras}}</p>
+                                            <p *ngIf="!lastGame.equipo_1.win" class="marcador_gray">{{lastGame.equipo_1.carreras}}</p>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <p *ngIf="lastGame.equipo_2.win" style="color: #35ad79;font-size: 60px;font-weight: 400;">{{lastGame.equipo_2.carreras}}</p>
-                                            <p *ngIf="!lastGame.equipo_2.win" style="color: #9B9B9B;font-size: 60px;font-weight: 400;">{{lastGame.equipo_2.carreras}}</p>
+                                            <p *ngIf="lastGame.equipo_2.win" class="marcador_green">{{lastGame.equipo_2.carreras}}</p>
+                                            <p *ngIf="!lastGame.equipo_2.win" class="marcador_gray">{{lastGame.equipo_2.carreras}}</p>
                                         </div>
                                     </div>
                                     <div class="row d-flex justify-content-center">
@@ -179,178 +190,76 @@
                                         <hr class="linea">
                                     </div>
                                 </div>
-                                <div class="col-3 border text-center" style="height: 175px;">
-                                    <img class="mt-4" [src]="lastGame.equipo_2.logo" style="width: 100px;height : 100px;">
-                                    <p class="mt-2 text-one f14">{{lastGame.equipo_2.equipo}}</p>
+                                <div class="col-3 border text-center marco_img" style="height: 175px;">
+                                    <img class="mt-4 img_div" [src]="lastGame.equipo_2.logo">
+                                    <p class="mt-2 text-one text_img">{{lastGame.equipo_2.equipo}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-3">
-                    <div *ngFor="let lastGame of lastesdGames" class="col-12 bg-white mt-2 border alturaClass">
-                        <div class="row">
-                            <div class="col-12 text-one-sub f14 text-center mt-2 mt-lg-5 titulo1_div">{{lastGame.ubicacion}}</div>
+                <div class="col-md-12 col-lg-4 pl-lg-5">
+                    <div class="row estadisticas border-bottom mt-lg-0 mt-4">
+                        <div class="col-8 text-one-sub f18">
+                            <p class="borde-left">TABLA DE POSICIONES</p>
                         </div>
-                        <div class="row">
-                            <div class="col-12 text-one-sub text-center mt-1 titulo2_div">{{lastGame.temporada}}</div>
-                        </div>
-                        <div class="row mt-3 div_img">
-                            <div class="col-3 border text-center marco_img">
-                                <img class="mt-4 img_div" [src]="lastGame.equipo_1.logo">
-                                <p class="text-one mt-2 text_img">{{lastGame.equipo_1.equipo}}</p>
-                            </div>
-                            <div class="col-4">
-                                <div class="row px-lg-3 px-0">
-                                    <div class="col-6 text-start">
-                                        <p *ngIf="lastGame.equipo_1.win" class="marcador_green">{{lastGame.equipo_1.carreras}}</p>
-                                        <p *ngIf="!lastGame.equipo_1.win" class="marcador_gray">{{lastGame.equipo_1.carreras}}</p>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <p *ngIf="lastGame.equipo_2.win" class="marcador_green">{{lastGame.equipo_2.carreras}}</p>
-                                        <p *ngIf="!lastGame.equipo_2.win" class="marcador_gray">{{lastGame.equipo_2.carreras}}</p>
-                                    </div>
-                                </div>
-                                <div class="row d-flex justify-content-center">
-                                    <hr class="linea">
-                                    <div class="circle">VS</div>
-                                    <hr class="linea">
-                                </div>
-                            </div>
-                            <div class="col-3 border text-center marco_img" style="height: 175px;">
-                                <img class="mt-4 img_div" [src]="lastGame.equipo_2.logo">
-                                <p class="mt-2 text-one text_img">{{lastGame.equipo_2.equipo}}</p>
-                            </div>
-                        </div>
-                        <div class="row estadisticas border-bottom mt-4">
-                            <div class="col-12 text-one-sub f18">
-                                <p class="borde-left">ESTADÍSTICAS DEL EQUIPO</p>
-                            </div>
+                        <div class="col-4">
+                            <button class="text-dark text-one f12 aunt_select distinc float-right">MÁS</button>
                         </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-12 table-responsive px-0">
                             <table class="table aunt_table border mt-2">
-                                <thead style="background-color: #35AD79;color: white;">
-                                    <tr class="f14 text-one-sub">
-                                        <th colspan="3">
-                                            POSICIONES
-                                        </th>
-                                        <th>W</th>
-                                        <th>L</th>
-                                        <th>PTS</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="background-color: white;">
-                                    <tr *ngFor="let posicion of TablaPosicion" style="cursor: pointer;">
-                                        <td class="text-one-sub f14" style="vertical-align: middle;">
-                                            <p>{{posicion.position}}</p>
-                                        </td>
-                                        <td style="vertical-align: middle;">
-                                            <img [src]="posicion.foto" class="img_table">
-                                        </td>
-                                        <td class="text-one-sub f14" style="vertical-align: middle;">
-                                            <p>{{posicion.equipo}}</p>
-                                        </td>
-                                        <td class="text-one-sub f14" style="vertical-align: middle;">{{posicion.wins}}</td>
-                                        <td class="text-one-sub f14" style="vertical-align: middle;">{{posicion.loses}}</td>
-                                        <td class="text-one-sub f14" style="vertical-align: middle;">{{posicion.points}}</td>
-                                    </tr>
-                                </tbody>
+
+                                <tr *ngFor="let posicion of TablaPosicion" style="cursor: pointer;">
+                                    <thead style="background-color: #35AD79;color: white;">
+                                        <tr class="f14 text-one-sub">
+                                            <th colspan="3">
+                                                POSICIONES
+                                            </th>
+                                            <th>W</th>
+                                            <th>L</th>
+                                            <th>PTS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="background-color: white;">
+                                        <tr *ngFor="let equipo of posicion.equipos">
+                                            <td class="text-one-sub f14" style="vertical-align: middle;">
+                                                <p>{{equipo.position}}</p>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <img [src]="posicion.foto" class="img_table">
+                                            </td>
+                                            <td class="text-one-sub f14" style="vertical-align: middle;">
+                                                <p>{{equipo.equipo}}</p>
+                                            </td>
+                                            <td class="text-one-sub f14" style="vertical-align: middle;">{{equipo.wins}}</td>
+                                            <td class="text-one-sub f14" style="vertical-align: middle;">{{equipo.loses}}</td>
+                                            <td class="text-one-sub f14" style="vertical-align: middle;">{{equipo.points}}</td>
+                                        </tr>
+                                    </tbody>
+                                </tr>
+
                             </table>
                         </div>
                     </div>
                     <div class="row estadisticas border-bottom mt-4">
                         <div class="col-12 text-one-sub f18">
-                            <p class="borde-left">ESTADÍSTICAS DEL EQUIPO</p>
-                        </div>
-                    </div>
-                    <div class="row mt-4" style="height: 250px;">
-                        <div class="col-6 px-0 text-center border bg-white">
-                            <p class="text-one-sub py-0 my-0 mt-4" style="font-size: 34px;font-weight: 300;height: fit-content;">109</p>
-                            <p class="text-one-sub f12 py-0 my-0" style="color: #9B9B9B;height: fit-content;">PUNTOS POR JUEGO</p>
-                        </div>
-                        <div class="col-6 px-0 text-center border bg-white">
-                            <p class="text-one-sub py-0 my-0 mt-4" style="font-size: 34px;font-weight: 300;height: fit-content;">65</p>
-                            <p class="text-one-sub f12 py-0 my-0" style="color: #9B9B9B;height: fit-content;">HITS POR JUEGO</p>
-                        </div>
-                        <div class="col-6 px-0 text-center border bg-white">
-                            <p class="text-one-sub py-0 my-0 mt-4" style="font-size: 34px;font-weight: 300;height: fit-content;">23.6</p>
-                            <p class="text-one-sub f12 py-0 my-0" style="color: #9B9B9B;height: fit-content;">BASES POR JUEGO</p>
-                        </div>
-                        <div class="col-6 px-0 text-center border bg-white">
-                            <p class="text-one-sub py-0 my-0 mt-4" style="font-size: 34px;font-weight: 300;height: fit-content;">102</p>
-                            <p class="text-one-sub f12 py-0 my-0" style="color: #9B9B9B;height: fit-content;">HOMERONS POR JUEGO</p>
-                        </div>
-                    </div>
-                    <div class="row estadisticas border-bottom mt-4">
-                        <div class="col-12 text-one-sub f18">
-                            <p class="borde-left">NUESTROS PREMIOS</p>
+                            <p class="borde-left">ANUNCIOS</p>
                         </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-12 px-0">
-                            <ngb-carousel [interval]="5000" [showNavigationArrows]="false">
+                            <ngb-carousel [interval]="5000" [showNavigationArrows]="false" style="height: 450px;">
                                 <ng-template *ngFor="let premio of PremiosData" ngbSlide>
-                                    <div class="px-2 py-2" style="background: #304E5E;">
-                                        <div class="marco border" style="width: 100%; height: 50vh;">
-                                            <div class="row justify-content-center align-items-center h-100">
-                                                <div class="col-6 text-center">
-                                                    <a class="text-one-sub d-block py-0 my-0" style="font-size: 34px;color: #FCEF57;height: fit-content;">{{premio.titulo_amarillo}}</a>
-                                                    <a class="text-one-sub text-white py-0 my-0" style="font-size: 22px;height: fit-content;">{{premio.titulo}}</a>
-                                                    <hr class="my-2 py-0" style="width: 50px;margin: auto;background-color: white;border: white;">
-                                                    <p class="py-0 text-one-sub f18" style="color: #35AD79;">{{premio.fecha}}</p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <img [src]="premio.foto_copa" alt="Random first slide" class="mh-100" style="width: 100%;object-fit: cover;object-position: center center;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 px-0 text-center border bg-white">
-                                        <p class="text-one-sub py-0 my-0 mt-4" style="font-size: 34px;font-weight: 300;height: fit-content;">65</p>
-                                        <p class="text-one-sub f12 py-0 my-0" style="color: #9B9B9B;height: fit-content;">HITS POR JUEGO</p>
-                                    </div>
-                                    <div class="col-6 px-0 text-center border bg-white">
-                                        <p class="text-one-sub py-0 my-0 mt-4" style="font-size: 34px;font-weight: 300;height: fit-content;">23.6</p>
-                                        <p class="text-one-sub f12 py-0 my-0" style="color: #9B9B9B;height: fit-content;">BASES POR JUEGO</p>
-                                    </div>
-                                    <div class="col-6 px-0 text-center border bg-white">
-                                        <p class="text-one-sub py-0 my-0 mt-4" style="font-size: 34px;font-weight: 300;height: fit-content;">102</p>
-                                        <p class="text-one-sub f12 py-0 my-0" style="color: #9B9B9B;height: fit-content;">HOMERONS POR JUEGO</p>
-                                    </div>
-                        </div>
-                        <div class="row estadisticas border-bottom mt-4">
-                            <div class="col-12 text-one-sub f18">
-                                <p class="borde-left">NUESTROS PREMIOS</p>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-12 px-0">
-                                <ngb-carousel [interval]="5000" [showNavigationArrows]="false">
-                                    <ng-template *ngFor="let premio of PremiosData" ngbSlide>
-                                        <div class="px-2 py-2" style="background: #304E5E;">
-                                            <div class="marco border" style="width: 100%; height: 50vh;">
-                                                <div class="row justify-content-center align-items-center h-100">
-                                                    <div class="col-6 text-center">
-                                                        <a class="text-one-sub d-block py-0 my-0" style="font-size: 34px;color: #FCEF57;height: fit-content;">{{premio.titulo_amarillo}}</a>
-                                                        <a class="text-one-sub text-white py-0 my-0" style="font-size: 22px;height: fit-content;">{{premio.titulo}}</a>
-                                                        <hr class="my-2 py-0" style="width: 50px;margin: auto;background-color: white;border: white;">
-                                                        <p class="py-0 text-one-sub f18" style="color: #35AD79;">{{premio.fecha}}</p>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <img [src]="premio.foto_copa" alt="Random first slide" class="mh-100" style="width: 100%;object-fit: cover;object-position: center center;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </ngb-carousel>
-                            </div>
+                                    <img [src]="premio.foto_copa" alt="Random first slide" class="w-100 h-100" style="width: 100%;object-fit: cover;object-position: center center;">
+                                </ng-template>
+                            </ngb-carousel>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     <footer style="background-color: #35363C;">
         <div class="container">
@@ -408,11 +317,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="pie py-2" style="background-color: #2C2D31;">
-                    <div class="container">
-                        <p class="py-0 my-0" style="color: #707279 !important;">Copyright 2022 © <a class="nv-i" style="cursor: pointer;">SERTEZA</a></p>
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div class="pie py-2" style="background-color: #2C2D31;">
+            <div class="container">
+                <p class="py-0 my-0" style="color: #707279 !important;">Copyright 2022 © <a class="nv-i" style="cursor: pointer;">SERTEZA</a></p>
+            </div>
+        </div>
     </footer>
 </body>
 
@@ -448,7 +359,7 @@
                                 <p class="mb-0" (click)="openModal()">Recupera tu contraseña <a href="#">aquí</a></p>
                             </div>
                             <div class="col-12 text-center">
-                                <button type="submit" class="btn text-white btn-sm" style="background-color: #35AD79;" (click)="Login()">Iniciar sesión</button>
+                                <button class="btn text-white btn-sm" style="background-color: #35AD79;" (click)="Login()">Iniciar sesión</button>
                             </div>
                         </form>
                     </div>
@@ -457,24 +368,7 @@
         </div>
         <div class="row pb-3">
             <div class="col-12">
-                <form action="" method="" class="row g-3">
-                    <strong class="text-center">LIGA INFANTIL Y JUVENIL DE BEISBOL YUCATAN A.C.</strong>
-                    <strong class="text-center">{{temporadaa}}</strong>
-                    <div class="col-12">
-                        <label>Correo electrónico</label>
-                        <input type="text" name="username" class="form-control" placeholder="Username" [(ngModel)]="login.usuario">
-                    </div>
-                    <div class="col-12">
-                        <label>Contraseña</label>
-                        <input type="password" name="password" class="form-control" placeholder="Password" [(ngModel)]="login.contra">
-                    </div>
-                    <div class="col-12">
-                        <p class="mb-0" (click)="openModal()">Recupera tu contraseña <a href="#">aquí</a></p>
-                    </div>
-                    <div class="col-12 text-center">
-                        <button class="btn text-white btn-sm" style="background-color: #35AD79;" (click)="Login()">Iniciar sesión</button>
-                    </div>
-                </form>
+                <p class="text-center mb-0"> Aún no has registrado a tu equipo? <a class="text-info" style="cursor: pointer;">Registralo</a></p>
             </div>
         </div>
     </div>
@@ -494,166 +388,101 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 header_mod">
-                        <a (click)="modalReg.close()" style="cursor: pointer;" class="active_aunt"><i class="fas fa-times"></i></a>
-                    </div>
-                </div>
-                <div class="row justify-content-center pb-4 mt-n5">
-                    <div class="col-10 body_mod">
-                        <div class="row justify-content-center mt-n3">
-                            <div class="col-3">
-                                <img src="./assets/logos/logo.png" class="img-fluid">
+                    <div class="col-12">
+                        <div class="form">
+                            <div class="form-row">
+                                <div class="col-12 text-center">
+                                    <strong class="text-center">REGISTRA A TU EQUIPO</strong>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-12">
-                            <mat-tab-group mat-align-tabs="start">
-                                <mat-tab label="EQUIPO">
-                                    <div class="container mt-2">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="row align-items-center">
-                                                    <div class="col-10">
-                                                        <label for="formFile" class="form-label">Recibo de pago</label>
-                                                        <input class="form-control" type="file" accept=".jpg" (change)="cambiarImagen($event)" name="file">
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <mat-tab-group mat-align-tabs="start">
+                                        <mat-tab label="EQUIPO">
+                                            <div class="container mt-2">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-10">
+                                                                <label for="formFile" class="form-label">Recibo de pago</label>
+                                                                <input class="form-control" type="file" accept=".jpg" (change)="cambiarImagen($event)" name="file">
+                                                            </div>
+                                                            <div class="col-1 pt-lg-4" style="font-size: 32px;color: #38b44a;">
+                                                                <i class="fas fa-camera" (click)="tomarFoto()" style="cursor: pointer;" title="Tomar foto"></i>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-1 pt-lg-4" style="font-size: 32px;color: #38b44a;">
-                                                        <i class="fas fa-camera" (click)="tomarFoto()" style="cursor: pointer;" title="Tomar foto"></i>
+                                                    <div class="col-12 mt-1">
+                                                        <label for="formFile" class="form-label">Nombre del equipo</label>
+                                                        <input class="form-control" type="text" [(ngModel)]="json.equipo" style="text-transform: uppercase;" name="equipo">
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-12">
-                                                <mat-tab-group mat-align-tabs="start">
-                                                    <mat-tab label="EQUIPO">
-                                                        <div class="container mt-2">
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <div class="row align-items-center">
-                                                                        <div class="col-11">
-                                                                            <label for="formFile" class="form-label">Recibo de pago</label>
-                                                                            <input class="form-control" type="file" accept=".jpg" (change)="cambiarImagen($event)" name="file">
-                                                                        </div>
-                                                                        <div class="col-1 pt-lg-4" style="font-size: 32px;color: #38b44a;">
-                                                                            <i class="fas fa-camera" (click)="tomarFoto()" style="cursor: pointer;" title="Tomar foto"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12 mt-1">
-                                                                    <label for="formFile" class="form-label">Nombre del equipo</label>
-                                                                    <input class="form-control" type="text" [(ngModel)]="json.equipo" style="text-transform: uppercase;" name="equipo">
-                                                                </div>
-                                                                <div class="col-12 mt-2">
-                                                                    <label for="formFile" class="form-label">Categoria</label>
-                                                                    <select class="form-select" aria-label="Default select example" [(ngModel)]="json.CategoriaID">
+                                                    <div class="col-12 mt-2">
+                                                        <label for="formFile" class="form-label">Categoria</label>
+                                                        <select class="form-select" aria-label="Default select example" [(ngModel)]="json.CategoriaID">
                                         <option selected disabled>Selecciona la categoria del equipo</option>
                                         <option *ngFor="let categoria of categorias" value="{{categoria.CategoriaID}}">{{categoria.Categoria}}</option>
                                       </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </mat-tab>
-                                                    <mat-tab label="REPRESENTANTE">
-                                                        <div class="container mt-2">
-                                                            <div class="row">
-                                                                <div class="col-lg-6 col-sm-12 form-group">
-                                                                    <label for="formFile" class="form-label">CURP</label>
-                                                                    <input class="form-control" type="text" [(ngModel)]="json.curp" style="text-transform: uppercase;" maxlength="18" required name="curp">
-                                                                </div>
-                                                                <div class="col-lg-6 col-sm-12 form-group">
-                                                                    <label for="formFile" class="form-label">Telefono</label>
-                                                                    <input class="form-control" type="text" [(ngModel)]="json.telefono" style="text-transform: uppercase;" maxlength="10" name="telefono">
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-lg-4 col-sm-6 form-group">
-                                                                    <label for="formFile" class="form-label">Apellido paterno</label>
-                                                                    <input class="form-control" type="text" [(ngModel)]="json.apellido_p" style="text-transform: uppercase;" required name="apeP">
-                                                                </div>
-                                                                <div class="col-lg-4 col-sm-6 form-group">
-                                                                    <label for="formFile" class="form-label">Apellido materno</label>
-                                                                    <input class="form-control" type="text" [(ngModel)]="json.apellido_m" style="text-transform: uppercase;" required>
-                                                                </div>
-                                                                <div class="col-lg-4 col-sm-12 form-group">
-                                                                    <label for="formFile" class="form-label">Nombre (s)</label>
-                                                                    <input class="form-control" type="text" [(ngModel)]="json.nombres" style="text-transform: uppercase;" required name="apeM">
-                                                                </div>
-                                                                <div class="col-4 form-group">
-                                                                    <label for="formFile" class="form-label">Correo</label>
-                                                                    <input class="form-control" type="text" [(ngModel)]="json.correo" name="correo" required>
-                                                                </div>
-                                                                <div class="col-4 form-group">
-                                                                    <label for="formFile" class="form-label">Contraseña</label>
-                                                                    <input class="form-control" type="password" [(ngModel)]="json.contra" maxlength="50" name="contra" required>
-                                                                </div>
-                                                                <div class="col-4 form-group">
-                                                                    <label for="formFile" class="form-label">Repetir contraseña</label>
-                                                                    <input class="form-control" type="password" name="repit">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </mat-tab>
-                                                </mat-tab-group>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </mat-tab>
-                                <mat-tab label="REPRESENTANTE">
-                                    <div class="container mt-2">
-                                        <div class="row">
-                                            <div class="col-md-12 col-lg-6 form-group">
-                                                <label for="formFile" class="form-label">CURP</label>
-                                                <input class="form-control" type="text" [(ngModel)]="json.curp" style="text-transform: uppercase;" maxlength="18" required name="curp">
+                                        </mat-tab>
+                                        <mat-tab label="REPRESENTANTE">
+                                            <div class="container mt-2">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-6 form-group">
+                                                        <label for="formFile" class="form-label">CURP</label>
+                                                        <input class="form-control" type="text" [(ngModel)]="json.curp" style="text-transform: uppercase;" maxlength="18" required name="curp">
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-6 form-group">
+                                                        <label for="formFile" class="form-label">Telefono</label>
+                                                        <input class="form-control" type="text" [(ngModel)]="json.telefono" style="text-transform: uppercase;" maxlength="10" name="telefono">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-sm-6 form-group">
+                                                        <label for="formFile" class="form-label">Apellido paterno</label>
+                                                        <input class="form-control" type="text" [(ngModel)]="json.apellido_p" style="text-transform: uppercase;" required name="apeP">
+                                                    </div>
+                                                    <div class="col-lg-4 col-sm-6 form-group">
+                                                        <label for="formFile" class="form-label">Apellido materno</label>
+                                                        <input class="form-control" type="text" [(ngModel)]="json.apellido_m" style="text-transform: uppercase;" required>
+                                                    </div>
+                                                    <div class="col-lg-4 col-sm-12 form-group">
+                                                        <label for="formFile" class="form-label">Nombre (s)</label>
+                                                        <input class="form-control" type="text" [(ngModel)]="json.nombres" style="text-transform: uppercase;" required name="apeM">
+                                                    </div>
+                                                    <div class="col-4 form-group">
+                                                        <label for="formFile" class="form-label">Correo</label>
+                                                        <input class="form-control" type="text" [(ngModel)]="json.correo" name="correo" required>
+                                                    </div>
+                                                    <div class="col-4 form-group">
+                                                        <label for="formFile" class="form-label">Contraseña</label>
+                                                        <input class="form-control" type="password" [(ngModel)]="json.contra" maxlength="50" name="contra" required>
+                                                    </div>
+                                                    <div class="col-4 form-group">
+                                                        <label for="formFile" class="form-label">Repetir contraseña</label>
+                                                        <input class="form-control" type="password" name="repit">
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-12 col-lg-6 form-group">
-                                                <label for="formFile" class="form-label">Telefono</label>
-                                                <input class="form-control" type="text" [(ngModel)]="json.telefono" style="text-transform: uppercase;" maxlength="10" name="telefono">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-4 col-sm-6 form-group">
-                                                <label for="formFile" class="form-label">Apellido paterno</label>
-                                                <input class="form-control" type="text" [(ngModel)]="json.apellido_p" style="text-transform: uppercase;" required name="apeP">
-                                            </div>
-                                            <div class="col-lg-4 col-sm-6 form-group">
-                                                <label for="formFile" class="form-label">Apellido materno</label>
-                                                <input class="form-control" type="text" [(ngModel)]="json.apellido_m" style="text-transform: uppercase;" required>
-                                            </div>
-                                            <div class="col-lg-4 col-sm-12 form-group">
-                                                <label for="formFile" class="form-label">Nombre (s)</label>
-                                                <input class="form-control" type="text" [(ngModel)]="json.nombres" style="text-transform: uppercase;" required name="apeM">
-                                            </div>
-                                            <div class="col-4 form-group">
-                                                <label for="formFile" class="form-label">Correo</label>
-                                                <input class="form-control" type="text" [(ngModel)]="json.correo" name="correo" required>
-                                            </div>
-                                            <div class="col-4 form-group">
-                                                <label for="formFile" class="form-label">Contraseña</label>
-                                                <input class="form-control" type="password" [(ngModel)]="json.contra" maxlength="50" name="contra" required>
-                                            </div>
-                                            <div class="col-4 form-group">
-                                                <label for="formFile" class="form-label">Repetir contraseña</label>
-                                                <input class="form-control" type="password" name="repit">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </mat-tab>
-                            </mat-tab-group>
+                                        </mat-tab>
+                                    </mat-tab-group>
+                                </div>
+                                <div class="col-12 text-right mt-2">
+                                    <button class="btn text-white btn-sm" style="background-color: #35AD79;" (click)="enviar()">Enviar inscripción</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 text-right mt-2">
-                            <button class="btn text-white btn-sm" style="background-color: #35AD79;" (click)="enviar()">Enviar inscripción</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pb-3">
-                    <div class="col-12">
-                        <strong class="text-center mb-0">Aviso : Tu solicitud de inscripción será revisada, te llegará un correo de confirmación para que puedas acceder a la plataforma</strong>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row pb-3">
+            <div class="col-12">
+                <strong class="text-center mb-0">Aviso : Tu solicitud de inscripción será revisada, te llegará un correo de confirmación para que puedas acceder a la plataforma</strong>
+            </div>
+        </div>
+    </div>
 </ng-template>
 <ng-template #modal_camera let-camera>
     <div class="modal-header">

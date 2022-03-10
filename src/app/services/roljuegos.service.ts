@@ -22,7 +22,7 @@ export class RolJuegosService {
       }));
   }
   obtenerJornadaActivo(){
-    let url = SERVER_API+"roljuegos/obtenerJornadas";
+    let url = SERVER_API+"roljuegos/obtenerJornadaActual";
     return this.http.get( url )
       .pipe(map( (resp: any) => {
         return resp;
