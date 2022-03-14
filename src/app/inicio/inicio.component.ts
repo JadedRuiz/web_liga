@@ -54,6 +54,13 @@ export class InicioComponent implements OnInit {
     correo : "",
     usuario_id : 0
   };
+  buzon = {
+    nombre : "",
+    correo : "",
+    telefono : "",
+    asunto : "",
+    comentario : ""
+  };
   //Variables modal registro
   categorias : any;
   json = {
@@ -89,6 +96,7 @@ export class InicioComponent implements OnInit {
     private login_service : LoginService,
     private registro_service : RegistroService,
     private roljuegos_service : RolJuegosService,
+    private inicio_service : InicioService,
     private router : Router
   ) {  }
 
@@ -377,6 +385,21 @@ export class InicioComponent implements OnInit {
             }
           });
         }
+        if(tipo == 3){
+          this.inicio_service.enviarCorreoBuzon(dato)
+          .subscribe((object : any) => {
+            if(object.ok){
+              Swal.fire("Buen trabajo","Se ha enviado el correo correoctamente","success");
+              this.buzon = {
+                nombre : "",
+                correo : "",
+                telefono : "",
+                asunto : "",
+                comentario : ""
+              };
+            }
+          });
+        }
       }
     });
   }
@@ -454,5 +477,28 @@ export class InicioComponent implements OnInit {
     if(tipo == 2){
       this.modal_close_registro.close();
     }
+  }
+
+  enviarBuzonCorreo(){
+    if(this.buzon.nombre == ""){
+      Swal.fire("Aviso","El campo nombre es obligatorio","info");
+      return "";
+    }
+    if(this.buzon.correo == ""){
+      Swal.fire("Aviso","El campo correo es obligatorio","info");
+      return "";
+    }
+    if(this.buzon.asunto == ""){
+      Swal.fire("Aviso","El campo asunto es obligatorio","info");
+      return "";
+    }
+    if(this.buzon.comentario == ""){
+      Swal.fire("Aviso","El comentario es obligatorio","info");
+      return "";
+    }
+    let json = {
+      "mensaje" : "Se ha enviado una sugerencia con la siguiete información. Nombre : "+this.buzon.nombre.toUpperCase()+", Asunto : "+this.buzon.asunto.toUpperCase()+", Telefono : "+this.buzon.telefono+", Comentario : "+this.buzon.comentario
+    }
+    this.confirmar("Confirmación","¿Seguro que deseas enviar tu sugerencia?","info",3,json);
   }
 }

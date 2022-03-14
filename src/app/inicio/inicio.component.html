@@ -288,32 +288,32 @@
                     <div class="row">
                         <div class="form-group col-sm-6">
                             <div class="help-block with-errors"></div>
-                            <input name="fname" id="fname" placeholder="Tu nombre*" class="form-control" type="text" required="" data-error="Por favor ingresa tu nombre">
+                            <input name="fname" id="fname" placeholder="Tu nombre*" class="form-control" type="text" required="" data-error="Por favor ingresa tu nombre" [(ngModel)]="buzon.nombre" style="text-transform: uppercase;">
                         </div>
                         <div class="form-group col-sm-6">
                             <div class="help-block with-errors"></div>
-                            <input name="email" id="email" placeholder="Tu E-mail*" pattern=".*@\w{2,}\.\w{2,}" class="form-control" type="email" required="" data-error="Por favor ingresa un correo electrónico válido">
-                        </div>
-                        <!-- end form-group -->
-                        <div class="form-group col-sm-6">
-                            <div class="help-block with-errors"></div>
-                            <input name="phone" id="phone" placeholder="Teléfono*" class="form-control" type="text" required="" data-error="Por favor ingresa tu número de teléfono">
+                            <input name="email" id="email" placeholder="TU CORREO*" pattern=".*@\w{2,}\.\w{2,}" class="form-control" type="email" required="" data-error="Por favor ingresa un correo electrónico válido" [(ngModel)]="buzon.correo">
                         </div>
                         <!-- end form-group -->
                         <div class="form-group col-sm-6">
                             <div class="help-block with-errors"></div>
-                            <input name="subject" id="subject" placeholder="Asunto*" class="form-control" type="text" required="" data-error="Por favor ingresa el asunto">
+                            <input name="phone" id="phone" placeholder="TELÉFONO*" class="form-control" type="text" required="" data-error="Por favor ingresa tu número de teléfono" [(ngModel)]="buzon.telefono" maxlength="10">
+                        </div>
+                        <!-- end form-group -->
+                        <div class="form-group col-sm-6">
+                            <div class="help-block with-errors"></div>
+                            <input name="subject" id="subject" placeholder="Asunto*" class="form-control" type="text" required="" data-error="Por favor ingresa el asunto" [(ngModel)]="buzon.asunto" style="text-transform: uppercase;">
                         </div>
                         <!-- end form-group -->
                         <div class="form-group col-sm-12 my-0 py-0">
                             <div class="help-block with-errors"></div>
-                            <textarea rows="3" name="message" id="message" placeholder="Escribe tu comentario aquí*" class="form-control" required="" data-error="Por favor ingresa un mensaje"></textarea>
+                            <textarea rows="3" name="message" id="message" placeholder="Escribe tu comentario aquí*" class="form-control" required="" data-error="Por favor ingresa un mensaje" [(ngModel)]="buzon.comentario" style="text-transform: uppercase;"></textarea>
                             <div class="textarea input-group-icon"><i class="fa fa-pencil"></i></div>
                         </div>
                         <!-- end form-group -->
 
                         <div class="form-group col-sm-12  text-start">
-                            <button class="btn" style="background-color: #35AD79;color: white;">Enviar</button>
+                            <button class="btn" style="background-color: #35AD79;color: white;" (click)="enviarBuzonCorreo()">Enviar</button>
                         </div>
                     </div>
                 </div>
