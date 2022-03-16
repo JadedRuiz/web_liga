@@ -48,4 +48,14 @@ export class InicioService {
 //         return throwError(err);
 //       }));
 //   }
+  enviarCorreoBuzon(json : any){
+    let url = SERVER_API+"inicio/enviarCorreo"
+    return this.http.post( url, json )
+      .pipe(map( (resp: any) => {
+        return resp;
+      }), catchError(err => {
+        Swal.fire("Ha ocurrido un error", err.error.message, 'error');
+        return throwError(err);
+      }));
+  }
 }
