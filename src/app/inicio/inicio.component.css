@@ -68,6 +68,13 @@
 .carousel_aunt{
     position: relative;
 }
+.carousel-item {
+	transition: -webkit-transform 0.5s ease !important;
+	transition: transform 0.5s ease !important;
+	transition: transform 0.5s ease, -webkit-transform 0.5s ease !important;
+	-webkit-backface-visibility: visible !important;
+    backface-visibility: visible !important;
+}
 .malla{
     position: absolute;
     top: 0;

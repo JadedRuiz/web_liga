@@ -121,13 +121,20 @@
                 <p>{{temporadaa}}</p>
             </div>
         </div>
-        <ngb-carousel [interval]="3000" class="carousel_aunt">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div *ngFor="let image of Imagedata; let itemFirst = first;"  class="carousel-item" [ngClass]="itemFirst ? 'active' : ''">
+                    <img [src]="image" class="d-block w-100 px-0" style="height: 43vh;object-fit: cover;object-position: center center;" alt="First slide">
+                </div>
+            </div>
+        </div>
+        <!-- <ngb-carousel [showNavigationArrows]="false" [interval]="1000">
             <ng-template *ngFor="let image of Imagedata" ngbSlide>
                 <div class="picsum-img-wrapper">
                     <img [src]="image" alt="Random first slide" class="mh-100" style="width: 100%; height: 43vh;object-fit: cover;object-position: center center;">
                 </div>
             </ng-template>
-        </ngb-carousel>
+        </ngb-carousel> -->
     </div>
     <section class="mainPage py-5 border px-lg-0 px-2" style="background-color: #EDEFF4;">
         <div class="container">
