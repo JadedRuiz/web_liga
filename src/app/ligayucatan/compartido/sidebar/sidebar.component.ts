@@ -80,6 +80,6 @@ export class SidebarComponent implements OnInit {
     window.sessionStorage.removeItem("UsuarioID");
     window.sessionStorage.removeItem("InscripcionID");
     window.sessionStorage.removeItem("Perfil");
-    this.router.navigate(['/login']);
+    this.router.navigate(['/landing/inicio']);
   }
 }
