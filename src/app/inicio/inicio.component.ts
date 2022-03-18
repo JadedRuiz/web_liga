@@ -101,8 +101,8 @@ export class InicioComponent implements OnInit {
   ) {  }
 
   ngOnInit(): void {
-    this.obtenerJornadaActual();
     this.getTemporadaActual();
+    this.obtenerJornadaActual();
     this.recuperarImagenes();
     this.recuperarRol();
     this.obtenerCatalogoTemporadas();
@@ -110,8 +110,8 @@ export class InicioComponent implements OnInit {
     this.recuperarPremios();
     //this.buscarJuegosFiltro();
     this.obtenerCategorias();
-    this.buscarPartidos(this.categoriaID, this.jornadaID);
-    this.recuperaTablaPosiciones();
+    this.recuperaTablaPosiciones(this.categoriaID);
+    
   }
   
   getTemporadaActual(){
@@ -132,6 +132,8 @@ export class InicioComponent implements OnInit {
         this.temporadaID = object.data[0].TemporadaID;
         this.jornadaID = object.data[0].JornadaID;
         this.jornada_vista = object.data[0].Jornada_Vista;
+        this.buscarPartidos(this.categoriaID, this.jornadaID);
+        //alert(this.jornadaID);
       }else{
         this.jornada_vista = object.message;
       }
@@ -155,10 +157,10 @@ export class InicioComponent implements OnInit {
     ]
   }
 
-  recuperaTablaPosiciones(){
+  recuperaTablaPosiciones(catID: number){
     let json = {
       TemporadaID : this.temporadaID,
-      CategoriaID : this.categoriaID
+      CategoriaID : catID
     };
     this.TablaPosicion = [];
     this.roljuegos_service.obtenerStanding(json)
@@ -175,9 +177,9 @@ export class InicioComponent implements OnInit {
 
   recuperarPremios(){
     this.PremiosData = [
-      { titulo_amarillo : "MEJOR", titulo : "ENTRENADOR", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-1.jpg"},
-      { titulo_amarillo : "MEJOR", titulo : "JUGADOR", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-2.jpg"},
-      { titulo_amarillo : "CAMPEON", titulo : "", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-3.jpg"}
+      { titulo_amarillo : "MEJOR", titulo : "ENTRENADOR", fecha : "NOVIEMBRE 2021", foto_copa : "https://apiliga.reydelosdeportes.com.mx/storage/anuncios/anuncio-1.jpg"},
+      { titulo_amarillo : "MEJOR", titulo : "JUGADOR", fecha : "NOVIEMBRE 2021", foto_copa : "https://apiliga.reydelosdeportes.com.mx/storage/anuncios/anuncio-2.jpg"},
+      { titulo_amarillo : "CAMPEON", titulo : "", fecha : "NOVIEMBRE 2021", foto_copa : "https://apiliga.reydelosdeportes.com.mx/storage/anuncios/anuncio-3.jpg"}
     ]
   }
 
@@ -195,11 +197,13 @@ export class InicioComponent implements OnInit {
     .subscribe((object : any) => {
       if(object.ok){
         this.Categorias = object.data;
+        
       }
     });
   }
   mostrarCategoria(catID: number){
     this.buscarPartidos(catID, this.jornadaID);
+    this.recuperaTablaPosiciones(catID);
   }
   
   buscarJornadas(){
