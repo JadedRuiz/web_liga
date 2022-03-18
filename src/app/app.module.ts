@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { InicioComponent } from './inicio/inicio.component';
-import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { RegistroComponent } from './registro/registro.component';
 import { AppComponent } from './app.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,13 +14,12 @@ import { LigayucatanModule } from './ligayucatan/ligayucatan.module';
 import {MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { LandingModule } from './landing/landing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InicioComponent,
-    LoginComponent,
-    RegistroComponent
+    InicioComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
     BrowserAnimationsModule,
     HttpClientModule,
     WebcamModule,
+    LandingModule,
     LigayucatanModule,
     MatSelectModule,
     MatInputModule,

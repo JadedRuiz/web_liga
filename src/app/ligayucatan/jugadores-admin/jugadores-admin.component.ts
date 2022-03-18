@@ -23,6 +23,7 @@ export class JugadoresAdminComponent implements OnInit {
   @ViewChild('content',{}) modal;
   @ViewChild('equipos',{}) modalEquipo;
   modal_control_equipo : any;
+  modal_control_jugador : any;
   myControl = new FormControl();
   foto : any;
   band_btn = true;
@@ -240,6 +241,7 @@ export class JugadoresAdminComponent implements OnInit {
           .subscribe((object : any) => {
             if(object.ok){
               Swal.fire("Buen trabajo",object.data,"success");
+              this.modal_control_jugador.close();
               this.limpiarCampos();
             }else{
               Swal.fire("Ha ocurrido un error",object.message,"error");
@@ -263,7 +265,7 @@ export class JugadoresAdminComponent implements OnInit {
 
   openModal(tipo : any) {
     if(tipo == 1){
-      this.modalService.open(this.modal, {ariaLabelledBy: 'modal-basic-title', size : "lg", centered : true, backdrop: 'static', keyboard: false});
+      this.modal_control_jugador = this.modalService.open(this.modal, {ariaLabelledBy: 'modal-basic-title', size : "lg", centered : true, backdrop: 'static', keyboard: false});
     }
     if(tipo == 2){
       this.modal_control_equipo = this.modalService.open(this.modalEquipo, {ariaLabelledBy: 'modal-basic-title', size : "lg", centered : true, backdrop: 'static', keyboard: false});

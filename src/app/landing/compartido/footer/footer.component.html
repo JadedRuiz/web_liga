@@ -1,0 +1,64 @@
+<footer style="background-color: #35363C;">
+    <div class="container">
+        <div class="row py-3">
+            <div class="col-lg-5 col-sm-12">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="./assets/logos/logo.png" class="w-100">
+                    </div>
+                    <div class="col-8">
+                        <p class="f14 text-justify mt-2" style="color: #707279;">Esta página de la Liga Yucatán es recreativa y con contenido educativo para todos los aficionados del rey de los deportes. No tenemos información sobre inscripciones ni temas de oficina.</p>
+                    </div>
+                </div>
+                <div class="row text-start justify-content-center align-items-center">
+                    <h3 class="f18 text-one-sub" style="color: #707279 ;">CONTACTANOS</h3>
+                    <div class="col-6">
+                        <p class="f14" style="color: #707279;"><i class="far fa-envelope" style="color: #35AD79;font-size: 24px;"></i>&nbsp; aquivaelcorreo@gmail.com</p>
+                    </div>
+                    <div class="col-5">
+                        <p class="f14" style="color: #707279;"><i class="fas fa-phone" style="color: #35AD79;font-size: 24px;"></i>&nbsp; +52 981 159 2659</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <h2 class="text-one-sub f18 text-start text-white">BUZÓN DE SUGERENCIAS</h2>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="help-block with-errors"></div>
+                        <input name="fname" id="fname" placeholder="Tu nombre*" class="form-control" type="text" required="" data-error="Por favor ingresa tu nombre" [(ngModel)]="buzon.nombre" style="text-transform: uppercase;">
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <div class="help-block with-errors"></div>
+                        <input name="email" id="email" placeholder="TU CORREO*" pattern=".*@\w{2,}\.\w{2,}" class="form-control" type="email" required="" data-error="Por favor ingresa un correo electrónico válido" [(ngModel)]="buzon.correo">
+                    </div>
+                    <!-- end form-group -->
+                    <div class="form-group col-sm-6">
+                        <div class="help-block with-errors"></div>
+                        <input name="phone" id="phone" placeholder="TELÉFONO*" class="form-control" type="text" required="" data-error="Por favor ingresa tu número de teléfono" [(ngModel)]="buzon.telefono" maxlength="10">
+                    </div>
+                    <!-- end form-group -->
+                    <div class="form-group col-sm-6">
+                        <div class="help-block with-errors"></div>
+                        <input name="subject" id="subject" placeholder="Asunto*" class="form-control" type="text" required="" data-error="Por favor ingresa el asunto" [(ngModel)]="buzon.asunto" style="text-transform: uppercase;">
+                    </div>
+                    <!-- end form-group -->
+                    <div class="form-group col-sm-12 my-0 py-0">
+                        <div class="help-block with-errors"></div>
+                        <textarea rows="3" name="message" id="message" placeholder="Escribe tu comentario aquí*" class="form-control" required="" data-error="Por favor ingresa un mensaje" [(ngModel)]="buzon.comentario" style="text-transform: uppercase;"></textarea>
+                        <div class="textarea input-group-icon"><i class="fa fa-pencil"></i></div>
+                    </div>
+                    <!-- end form-group -->
+
+                    <div class="form-group col-sm-12  text-start">
+                        <button class="btn" style="background-color: #35AD79;color: white;" (click)="enviarBuzonCorreo()">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pie py-2" style="background-color: #2C2D31;">
+        <div class="container">
+            <p class="py-0 my-0" style="color: #707279 !important;">Copyright 2022 © <a class="nv-i" style="cursor: pointer;">SERTEZA</a></p>
+        </div>
+    </div>
+</footer>

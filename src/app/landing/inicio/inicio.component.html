@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="row justify-content-between">
+        <div class="col-md-12 col-lg-8">
+            <div class="row border-bottom pb-2 pb-lg-0">
+                <div class="col-lg-7 col-sm-12">
+                    <p class="borde-left text-one-sub f18">RESULTADOS {{categoria}}</p>
+                </div>
+                <div class="col-lg-5 col-sm-12">
+                    <div class="row btns_filtros">
+                        <div class="col-4 mr-lg-4">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="aunt_select text-one f12" id="dropdownBasic1" ngbDropdownToggle>CATEGORIAS</button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <a class="f12 text-one" *ngFor="let categoria of Categorias" (click)="mostrarCategoria(categoria.CategoriaID)" ngbDropdownItem>{{categoria.Categoria}}
+                          </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="aunt_select text-one f12" id="dropdownBasic1" ngbDropdownToggle>JORNADAS</button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <a class="f12 text-one" *ngFor="let jor of Jornadas" (click)="seleccionarJornadas(jor.JornadaID)" ngbDropdownItem>{{jor.Jornada_Vista}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div *ngFor="let lastGame of lastesdGames" class="col-12 bg-white mt-2 border alturaClass">
+                    <div class="row">
+                        <div class="col-12 text-one-sub f14 text-center mt-2 mt-lg-5 titulo1_div">{{lastGame.ubicacion}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-one-sub text-center mt-1 titulo2_div">{{lastGame.temporada}}</div>
+                    </div>
+                    <div class="row mt-3 div_img">
+                        <div class="col-3 border text-center marco_img">
+                            <img class="mt-4 img_div" [src]="lastGame.equipo_1.logo">
+                            <p class="text-one mt-2 text_img">{{lastGame.equipo_1.equipo}}</p>
+                        </div>
+                        <div class="col-4">
+                            <div class="row px-lg-3 px-0">
+                                <div class="col-6 text-start">
+                                    <p *ngIf="lastGame.equipo_1.win" class="marcador_green">{{lastGame.equipo_1.carreras}}</p>
+                                    <p *ngIf="!lastGame.equipo_1.win" class="marcador_gray">{{lastGame.equipo_1.carreras}}</p>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <p *ngIf="lastGame.equipo_2.win" class="marcador_green">{{lastGame.equipo_2.carreras}}</p>
+                                    <p *ngIf="!lastGame.equipo_2.win" class="marcador_gray">{{lastGame.equipo_2.carreras}}</p>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <hr class="linea">
+                                <div class="circle">VS</div>
+                                <hr class="linea">
+                            </div>
+                        </div>
+                        <div class="col-3 border text-center marco_img" style="height: 175px;">
+                            <img class="mt-4 img_div" [src]="lastGame.equipo_2.logo">
+                            <p class="mt-2 text-one text_img">{{lastGame.equipo_2.equipo}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-4 pl-lg-5">
+            <div class="row estadisticas border-bottom mt-lg-0 mt-4">
+                <div class="col-8 text-one-sub f18">
+                    <p class="borde-left">TABLA DE POSICIONES</p>
+                </div>
+                <div class="col-4">
+                    <button class="text-dark text-one f12 aunt_select distinc float-right">MÁS</button>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 table-responsive px-0">
+                    <table class="table aunt_table border mt-2">
+
+                        <tr *ngFor="let posicion of TablaPosicion" style="cursor: pointer;">
+                            <thead style="background-color: #35AD79;color: white;">
+                                <tr class="f14 text-one-sub">
+                                    <th colspan="3">
+                                        POSICIONES {{posicion.clasificacion}}
+                                    </th>
+                                    <th>G</th>
+                                    <th>P</th>
+                                    <th>%</th>
+                                </tr>
+                            </thead>
+                            <tbody style="background-color: white;">
+                                <tr *ngFor="let equipo of posicion.equipos">
+                                    <td class="text-one-sub f14" style="vertical-align: middle;">
+                                        <p>{{equipo.position}}</p>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <img [src]="equipo.foto" class="img_table">
+                                    </td>
+                                    <td class="text-one-sub f14" style="vertical-align: middle;">
+                                        <p>{{equipo.equipo}}</p>
+                                    </td>
+                                    <td class="text-one-sub f14" style="vertical-align: middle;">{{equipo.wins}}</td>
+                                    <td class="text-one-sub f14" style="vertical-align: middle;">{{equipo.loses}}</td>
+                                    <td class="text-one-sub f14" style="vertical-align: middle;">{{equipo.points}}</td>
+                                </tr>
+                            </tbody>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="row estadisticas border-bottom mt-4">
+                <div class="col-12 text-one-sub f18">
+                    <p class="borde-left">ANUNCIOS</p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 px-0">
+                    <ngb-carousel [interval]="5000" [showNavigationArrows]="false" style="height: 450px;">
+                        <ng-template *ngFor="let premio of PremiosData" ngbSlide>
+                            <img [src]="premio.foto_copa" alt="Random first slide" class="w-100 h-100" style="width: 100%;object-fit: cover;object-position: center center;">
+                        </ng-template>
+                    </ngb-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

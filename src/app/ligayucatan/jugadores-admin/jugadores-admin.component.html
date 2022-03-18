@@ -186,7 +186,13 @@
         <div class="container">
             <div class="form">
                 <div class="row align-items-center">
-                  <div class="col-md-8">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="bmd-label-floating">CURP</label>
+                      <input type="text" class="form-control" [disabled]="form"  [(ngModel)]="jugador.curp" name="curp" style="text-transform: uppercase;">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
                     <div class="row align-items-center">
                       <div class="col-md-10">
                         <div>
@@ -418,8 +424,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-danger" (click)="modal.close('Save click')"><i class="far fa-times-circle"></i> Cancelar</button>
-        <button class="btn btn-success" (click)="altaJugador()"><i class="far fa-check-circle"></i> Continuar</button>
+        <button class="btn btn-danger" (click)="modal.close('Save click')"><i class="far fa-times-circle"></i> Cerrar</button>
+        <button class="btn btn-success" (click)="altaJugador()"><i class="far fa-check-circle"></i> Guardar</button>
     </div>
 </ng-template>
 <ng-template #equipos let-equipo>

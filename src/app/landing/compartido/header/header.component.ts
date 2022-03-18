@@ -1,41 +1,22 @@
-import { Component, OnInit, Output, ViewChild, ViewEncapsulation, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbCarousel, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { data } from 'jquery';
-import { RegistroService } from '../services/registro.service';
-import { LoginService } from '../services/login.service';
-import { RolJuegosService } from '../services/roljuegos.service';
-import { InicioService } from '../services/inicio.service';
 import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
+import { InicioService } from 'src/app/services/inicio.service';
+import { LoginService } from 'src/app/services/login.service';
+import { RegistroService } from 'src/app/services/registro.service';
 import Swal from 'sweetalert2';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.css'],
-  encapsulation: ViewEncapsulation.None
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
-export class InicioComponent implements OnInit {
+export class HeaderComponent implements OnInit {
 
   Imagedata : any; 
-  PremiosData : any;
   Partidos : any;
-  Jornadas : any;
-  Temporadas : any;
-  Categorias : any;
-  Fechas : any;
-  TablaPosicion : any;
-  lastesdGames : any;
-  temporadaa = "";
-  categoriaID = 4;
-  categoria = "";
-  temporadaID = 22;
-  roljuegoID = 0;
-  jornadaID = 269;
-  jornada_vista = "";
-
   @ViewChild('carousel', {static : true}) carousel: NgbCarousel;
   @ViewChild('contentLogin', {static : true}) modal_login: any;
   @ViewChild('modalReg', {static : true}) modal_registro: any;
@@ -53,13 +34,6 @@ export class InicioComponent implements OnInit {
     equipo : "",
     correo : "",
     usuario_id : 0
-  };
-  buzon = {
-    nombre : "",
-    correo : "",
-    telefono : "",
-    asunto : "",
-    comentario : ""
   };
   //Variables modal registro
   categorias : any;
@@ -90,30 +64,20 @@ export class InicioComponent implements OnInit {
   tipo = 0;
   modal_obj : any;
   coincidencias : any;
+  temporadaa = "";
 
   constructor(
     private modalService: NgbModal,
     private login_service : LoginService,
-    private registro_service : RegistroService,
-    private roljuegos_service : RolJuegosService,
     private inicio_service : InicioService,
-    private router : Router
-  ) {  }
+    private router : Router,
+    private registro_service : RegistroService
+    ) { }
 
   ngOnInit(): void {
-    this.obtenerJornadaActual();
-    this.getTemporadaActual();
     this.recuperarImagenes();
-    this.recuperarRol();
-    this.obtenerCatalogoTemporadas();
-    this.buscarJornadas();
-    this.recuperarPremios();
-    //this.buscarJuegosFiltro();
-    this.obtenerCategorias();
-    this.buscarPartidos(this.categoriaID, this.jornadaID);
-    this.recuperaTablaPosiciones();
   }
-  
+
   getTemporadaActual(){
     this.login_service.temporadaActual()
     .subscribe((object : any) => {
@@ -121,19 +85,6 @@ export class InicioComponent implements OnInit {
         this.temporadaa = object.data;
       }else{
         this.temporadaa = object.message;
-      }
-    })
-  }
-
-  obtenerJornadaActual(){
-    this.roljuegos_service.obtenerJornadaActivo()
-    .subscribe((object : any) => {
-      if(object.ok){
-        this.temporadaID = object.data[0].TemporadaID;
-        this.jornadaID = object.data[0].JornadaID;
-        this.jornada_vista = object.data[0].Jornada_Vista;
-      }else{
-        this.jornada_vista = object.message;
       }
     })
   }
@@ -155,121 +106,12 @@ export class InicioComponent implements OnInit {
     ]
   }
 
-  recuperaTablaPosiciones(){
-    let json = {
-      TemporadaID : this.temporadaID,
-      CategoriaID : this.categoriaID
-    };
-    this.TablaPosicion = [];
-    this.roljuegos_service.obtenerStanding(json)
-    .subscribe((object : any) => {
-      if(object.ok){
-        this.TablaPosicion = object.data;
-      }
-    });
-
-    //this.TablaPosicion = [
-    //  { position : 1, foto : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-1.png", equipo : "SPORTLAND", wins : "153", loses : "30", points : "186"}
-    //]
-  }
-
-  recuperarPremios(){
-    this.PremiosData = [
-      { titulo_amarillo : "MEJOR", titulo : "ENTRENADOR", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-1.jpg"},
-      { titulo_amarillo : "MEJOR", titulo : "JUGADOR", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-2.jpg"},
-      { titulo_amarillo : "CAMPEON", titulo : "", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-3.jpg"}
-    ]
-  }
-
-  obtenerCatalogoTemporadas(){
-    this.Temporadas = [
-      { id : 1, temporada : "TORNEO DE VERANO 2022"},
-      { id : 2, temporada : "TORNEO DE VERANO 2021"},
-      { id : 3, temporada : "TORNEO DE VERANO 2020"},
-    ]
-  }
-
-  obtenerCategorias(){
-    this.Categorias = [];
-    this.registro_service.catalogoCategorias()
-    .subscribe((object : any) => {
-      if(object.ok){
-        this.Categorias = object.data;
-      }
-    });
-  }
-  
-  mostrarCategoria(catID: number){
-    this.buscarPartidos(catID, this.jornadaID);
-  }
-  
-  buscarJornadas(){
-    this.Jornadas = [];
-    this.roljuegos_service.obtenerJornadas()
-    .subscribe((object : any) => {
-      if(object.ok){
-        this.Jornadas = object.data;
-      }
-    });
-  }
-
-  seleccionarJornadas(jornadaID:number){
-    this.buscarPartidos(this.categoriaID, jornadaID);
-    this.Jornadas = [];
-    this.roljuegos_service.obtenerJornadas()
-    .subscribe((object : any) => {
-      if(object.ok){
-        this.Jornadas = object.data;
-      }
-    });
-  }
-
-  buscarPartidos(busCategoriaID:number,busJornadaID:number){
-    let json = {
-      JornadaID : busJornadaID,
-      CategoriaID : busCategoriaID
-    };
-    this.lastesdGames = [];
-    this.roljuegos_service.obtenerResultados(json)
-    .subscribe((object : any) => {
-      if(object.ok){
-        this.lastesdGames = object.data;
-        this.categoria = object.data[0].categoria;
-        this.categoriaID = busCategoriaID;
-        
-        
-      }
-    });
-  }
-  
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size : "md", centered : true, keyboard : false});
-  }
-
   next(){
     this.carousel.next();
   }
   
   prev(){
     this.carousel.prev();
-  }
-
-  mostrarCategorias(){
-    this.categorias = [];
-    this.registro_service.catalogoCategorias()
-    .subscribe((object : any) => {
-      if(object.ok){
-        this.categorias = object.data;
-      }
-    });
-  }
-
-  enviar(){
-    if(this.json.recibo != ""){
-      this.confirmar("Confirmación","¿Estas seguro de enviar la inscripción?","info",1,null);
-    }else{
-      Swal.fire("Ha ocurrido un error","No se puede enviar una solicitud sin recibo de pago","error");
-    }
   }
 
   convertirImagenAB64(fileInput : any){
@@ -386,21 +228,6 @@ export class InicioComponent implements OnInit {
             }
           });
         }
-        if(tipo == 3){
-          this.inicio_service.enviarCorreoBuzon(dato)
-          .subscribe((object : any) => {
-            if(object.ok){
-              Swal.fire("Buen trabajo","Se ha enviado el correo correoctamente","success");
-              this.buzon = {
-                nombre : "",
-                correo : "",
-                telefono : "",
-                asunto : "",
-                comentario : ""
-              };
-            }
-          });
-        }
       }
     });
   }
@@ -438,7 +265,7 @@ export class InicioComponent implements OnInit {
   tomarFoto(){
     this.camera = this.modalService.open(this.modalCamera, { scrollable: true, size: 'md', centered: true, backdrop: 'static', keyboard: false });
   }
-
+  
   takeSnapshot(): void {
     this.trigger.next();
   }
@@ -479,28 +306,5 @@ export class InicioComponent implements OnInit {
     if(tipo == 2){
       this.modal_close_registro.close();
     }
-  }
-
-  enviarBuzonCorreo(){
-    if(this.buzon.nombre == ""){
-      Swal.fire("Aviso","El campo nombre es obligatorio","info");
-      return "";
-    }
-    if(this.buzon.correo == ""){
-      Swal.fire("Aviso","El campo correo es obligatorio","info");
-      return "";
-    }
-    if(this.buzon.asunto == ""){
-      Swal.fire("Aviso","El campo asunto es obligatorio","info");
-      return "";
-    }
-    if(this.buzon.comentario == ""){
-      Swal.fire("Aviso","El comentario es obligatorio","info");
-      return "";
-    }
-    let json = {
-      "mensaje" : "Se ha enviado una sugerencia con la siguiete información. Nombre : "+this.buzon.nombre.toUpperCase()+", Asunto : "+this.buzon.asunto.toUpperCase()+", Telefono : "+this.buzon.telefono+", Comentario : "+this.buzon.comentario
-    }
-    this.confirmar("Confirmación","¿Seguro que deseas enviar tu sugerencia?","info",3,json);
   }
 }

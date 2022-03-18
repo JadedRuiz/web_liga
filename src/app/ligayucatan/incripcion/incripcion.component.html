@@ -134,7 +134,7 @@
                     <div class="card card-profile">
                         <div class="card-avatar">
                             <a href="#pablo">
-                                <img class="img" src="./assets/logos/avatar.jpg" />
+                                <img class="img" [src]="foto_rep" />
                             </a>
                         </div>
                         <div class="card-body">
@@ -152,7 +152,7 @@
                     <div class="card card-profile">
                         <div class="card-avatar">
                             <a href="#pablo">
-                                <img class="img" src="./assets/logos/avatar.jpg" />
+                                <img class="img" [src]="foto_en" />
                             </a>
                         </div>
                         <div class="card-body">
@@ -170,7 +170,7 @@
                     <div class="card card-profile">
                         <div class="card-avatar">
                             <a href="#pablo">
-                                <img class="img" src="./assets/logos/avatar.jpg" />
+                                <img class="img" [src]="foto_ay" />
                             </a>
                         </div>
                         <div class="card-body">
@@ -190,13 +190,14 @@
                     <div class="card card-plain">
                         <div class="card-header card-header-primary">
                             <div class="row">
-                                <div class="col-11">
+                                <div class="col-10">
                                     <h4 class="card-title mt-0">{{datos.equipo}}</h4>
                                     <p class="card-category">LISTA DE JUGADORES</p>
                                     <p class="card-category">{{datos.categoria}}</p>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-2">
                                     <button class="btn-sm btn-light" title="FICHAS DE EQUIPO" (click)="verReporte(3,0)"><i class="fas fa-folder"></i></button>
+                                    <button class="btn-sm btn-light" title="REPORTE DE MI EQUIPO" (click)="verReporte(1,0)"><i class="fas fa-chevron-circle-down"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -218,7 +219,10 @@
                                             <td>{{jugador.FechaNacimiento}}</td>
                                             <td>{{jugador.TelPadre}}</td>
                                             <td>{{jugador.TelMadre}}</td>
-                                            <td><button class="btn-warning btn-sm" title="REPORTE DEL JUGADOR" (click)="verReporte(2,jugador.JugadorID)"><i class="fas fa-eye text-white"></i></button></td>
+                                            <td>
+                                                <button class="btn-warning btn-sm" title="REPORTE DEL JUGADOR" (click)="verReporte(2,jugador.JugadorID)"><i class="fas fa-eye text-white"></i></button>
+                                                <button class="btn-sm btn-danger" title="ELIMINAR JUGADOR" (click)="eliminarJugador(jugador.JugadorID)"><i class="far fa-trash-alt"></i></button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                     <ng-template #pintaVacio>

@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { data } from 'jquery';
 import { InicioService } from 'src/app/services/inicio.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
+import { JugadoresService } from 'src/app/services/jugadores.service';
 import { LoginService } from 'src/app/services/login.service';
 import { ReporteService } from 'src/app/services/reportes.service';
 import Swal from 'sweetalert2';
@@ -15,6 +16,9 @@ import Swal from 'sweetalert2';
 })
 export class IncripcionComponent implements OnInit {
 
+  foto_rep : any;
+  foto_en : any;
+  foto_ay : any;
   public temporada = "";
   public detalle_ins : any;
   public solicitudes : any;
@@ -46,7 +50,8 @@ export class IncripcionComponent implements OnInit {
     private inscripcion_service : InscripcionService,
     private inicio_service : InicioService,
     private reporte_service : ReporteService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private jugador_service : JugadoresService
   ) { }
 
   ngOnInit(): void {
@@ -174,6 +179,9 @@ export class IncripcionComponent implements OnInit {
         this.datos.curp_ay = object.data.CurpAy;
         this.datos.telefono_ay = object.data.TelAy;
         this.datos.jugadores = object.data.jugadores;
+        this.foto_rep  = object.data.FotoRep;
+        this.foto_en  = object.data.FotoEnt;
+        this.foto_ay  = object.data.FotoAy;
       }
     });
   }
@@ -218,6 +226,11 @@ export class IncripcionComponent implements OnInit {
     });
   }
 
+  
+  eliminarJugador(id : number){
+    this.confirmar("Confirmación","¿Seguro que deseas dar de baja al jugador?","info",2,id);
+  }
+
   confirmar(title : any ,texto : any ,tipo_alert : any,tipo : number, dato : any){
     Swal.fire({
       title: title,
@@ -240,7 +253,13 @@ export class IncripcionComponent implements OnInit {
           });
         }
         if(tipo == 2){
-          Swal.fire("En proceso","Funcion en desarrollo","info");
+          this.jugador_service.bajaJugador(dato)
+          .subscribe((object : any) => {
+            if(object.ok){
+              this.mostrarDatos(dato);
+              Swal.fire("Buen trabajo","El jugador ha sido eliminado","success");
+            }
+          });
         }
       }
     });
