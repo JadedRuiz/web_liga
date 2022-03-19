@@ -35,7 +35,7 @@
                         <mat-label>Equipos</mat-label>
                         <input type="text" placeholder="Seleccione un Equipo" [formControl]="myControl" (keyup)="buscarEquipo()" matInput [matAutocomplete]="auto">
                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="EquipoSeleccionado($event.option.id)">
-                            <mat-option *ngFor="let equipo of EquiposBuscados" [id]="equipo.InscripcionID" [value]="equipo.Equipo">
+                            <mat-option *ngFor="let equipo of Equipos" [id]="equipo.InscripcionID" [value]="equipo.Equipo">
                                 {{equipo.Equipo}}
                             </mat-option>
                         </mat-autocomplete>

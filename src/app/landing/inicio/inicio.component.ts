@@ -9,7 +9,7 @@ import { RolJuegosService } from 'src/app/services/roljuegos.service';
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
-  myControl= new FormControl;
+  myControl= new FormControl();
   Equipos: any;
   EquiposBuscados: any;
   PremiosData : any;
@@ -164,7 +164,6 @@ export class InicioComponent implements OnInit {
   }
 
   buscarEquipo(){
-    alert(this.myControl.value());
     this.Equipos = [];
     this.EquiposBuscados.forEach((element : any) => {
       this.Equipos.push({
@@ -172,10 +171,10 @@ export class InicioComponent implements OnInit {
         "InscripcionID" : element.InscripcionID
       });
     });
-    if(this.myControl.value().length > 0){
+    if(this.myControl.value.length > 0){
       this.Equipos = [];
       this.EquiposBuscados.forEach((element : any) => {
-        if(element.Equipo.includes(this.myControl.value().toUpperCase())){ 
+        if(element.Equipo.includes(this.myControl.value.toUpperCase())){ 
           this.Equipos.push({
             "Equipo" : element.Equipo,
             "InscripcionID" : element.InscripcionID
