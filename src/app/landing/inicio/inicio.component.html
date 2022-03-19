@@ -2,6 +2,7 @@
     <div class="row justify-content-between">
         <div class="col-md-12 col-lg-8">
             <div class="row border-bottom pb-2 pb-lg-0">
+
                 <div class="col-lg-7 col-sm-12">
                     <p class="borde-left text-one-sub f18">RESULTADOS {{categoria}}</p>
                 </div>
@@ -27,6 +28,19 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <form class="example-form">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Equipos</mat-label>
+                        <input type="text" placeholder="Seleccione un Equipo" [formControl]="myControl" (keyup)="buscarEquipo()" matInput [matAutocomplete]="auto">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="EquipoSeleccionado($event.option.id)">
+                            <mat-option *ngFor="let equipo of EquiposBuscados" [id]="equipo.InscripcionID" [value]="equipo.Equipo">
+                                {{equipo.Equipo}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
             </div>
             <div class="row justify-content-center mt-3">
                 <div *ngFor="let lastGame of lastesdGames" class="col-12 bg-white mt-2 border alturaClass">

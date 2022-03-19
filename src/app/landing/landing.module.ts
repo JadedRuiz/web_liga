@@ -6,7 +6,10 @@ import { InicioComponent } from './inicio/inicio.component';
 import { CompartidoModule } from '../landing/compartido/compartido.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReglasComponent } from './reglas/reglas.component';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,12 @@ import { ReglasComponent } from './reglas/reglas.component';
     CommonModule,
     CompartidoModule,
     LandingRoutingModule,
-    NgbModule
+    NgbModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class LandingModule { }

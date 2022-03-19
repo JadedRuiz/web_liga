@@ -48,4 +48,15 @@ export class RolJuegosService {
         return throwError(err);
       }));
   }
+
+  equiposTemporada(json : any){
+    let url = SERVER_API+"roljuegos/obtenerEquipos";
+    return this.http.post( url, json )
+      .pipe(map( (resp: any) => {
+        return resp;
+      }), catchError(err => {
+        Swal.fire("Ha ocurrido un error", err.error.message, 'error');
+        return throwError(err);
+      }));
+  }
 }

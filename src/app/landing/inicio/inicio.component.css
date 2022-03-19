@@ -62,14 +62,16 @@
 .carousel_aunt {
     position: relative;
 }
+
 .carousel-item {
-	transition: -webkit-transform 0.5s ease !important;
-	transition: transform 0.5s ease !important;
-	transition: transform 0.5s ease, -webkit-transform 0.5s ease !important;
-	-webkit-backface-visibility: visible !important;
+    transition: -webkit-transform 0.5s ease !important;
+    transition: transform 0.5s ease !important;
+    transition: transform 0.5s ease, -webkit-transform 0.5s ease !important;
+    -webkit-backface-visibility: visible !important;
     backface-visibility: visible !important;
 }
-.malla{
+
+.malla {
     position: absolute;
     top: 0;
     right: 0;
@@ -248,6 +250,23 @@
     color: #35ad79;
     font-size: 60px;
     font-weight: 400;
+}
+
+mat-label {
+    color: #4CAF50;
+}
+
+mat-form-field input {
+    color: #4CAF50;
+}
+
+mat-form-field input::placeholder {
+    color: #4CAF50;
+}
+
+mata-form-field input::borde-left {
+    border-left: 3px #28A745 solid;
+    padding-left: 10px;
 }
 
 @media only screen and (max-width: 900px) {

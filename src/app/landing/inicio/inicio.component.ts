@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { RegistroService } from 'src/app/services/registro.service';
 import { RolJuegosService } from 'src/app/services/roljuegos.service';
 
@@ -8,7 +9,9 @@ import { RolJuegosService } from 'src/app/services/roljuegos.service';
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
-
+  myControl= new FormControl;
+  Equipos: any;
+  EquiposBuscados: any;
   PremiosData : any;
   Partidos : any;
   Jornadas : any;
@@ -39,6 +42,7 @@ export class InicioComponent implements OnInit {
     this.obtenerCategorias();
     this.buscarPartidos(this.categoriaID, this.jornadaID);
     this.recuperaTablaPosiciones();
+    this.EquiposTemporada();
   }
 
   obtenerJornadaActual(){
@@ -70,6 +74,24 @@ export class InicioComponent implements OnInit {
     //this.TablaPosicion = [
     //  { position : 1, foto : "http://127.0.0.1/api_liga/storage/fotos/Equipos/Equipo-1.png", equipo : "SPORTLAND", wins : "153", loses : "30", points : "186"}
     //]
+  }
+
+  EquiposTemporada(){
+    let json = {
+      TemporadaID : this.temporadaID,
+    };
+    this.Equipos = [];
+    this.roljuegos_service.equiposTemporada(json)
+    .subscribe((object : any) => {
+      if(object.ok){
+        this.Equipos = object.data;
+        this.EquiposBuscados = object.data;
+      }
+    });
+  }
+  EquipoSeleccionado(InscripcionID:number){
+    alert(InscripcionID);
+
   }
 
   recuperarPremios(){
@@ -139,5 +161,27 @@ export class InicioComponent implements OnInit {
         
       }
     });
+  }
+
+  buscarEquipo(){
+    alert(this.myControl.value());
+    this.Equipos = [];
+    this.EquiposBuscados.forEach((element : any) => {
+      this.Equipos.push({
+        "Equipo" : element.Equipo,
+        "InscripcionID" : element.InscripcionID
+      });
+    });
+    if(this.myControl.value().length > 0){
+      this.Equipos = [];
+      this.EquiposBuscados.forEach((element : any) => {
+        if(element.Equipo.includes(this.myControl.value().toUpperCase())){ 
+          this.Equipos.push({
+            "Equipo" : element.Equipo,
+            "InscripcionID" : element.InscripcionID
+          });
+        }
+      });
+    }
   }
 }
