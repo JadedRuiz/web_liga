@@ -40,8 +40,8 @@ export class InicioComponent implements OnInit {
     this.recuperarPremios();
     //this.buscarJuegosFiltro();
     this.obtenerCategorias();
-    this.buscarPartidos(this.categoriaID, this.jornadaID);
-    this.recuperaTablaPosiciones();
+    this.buscarPartidos(this.categoriaID, this.jornadaID,0);
+    this.recuperaTablaPosiciones(this.temporadaID, this.categoriaID);
     this.EquiposTemporada();
   }
 
@@ -58,10 +58,10 @@ export class InicioComponent implements OnInit {
     })
   }
 
-  recuperaTablaPosiciones(){
+  recuperaTablaPosiciones(busTemporadaID:number,busCategoriaID:number){
     let json = {
-      TemporadaID : this.temporadaID,
-      CategoriaID : this.categoriaID
+      TemporadaID : busTemporadaID,
+      CategoriaID : busCategoriaID
     };
     this.TablaPosicion = [];
     this.roljuegos_service.obtenerStanding(json)
@@ -90,7 +90,7 @@ export class InicioComponent implements OnInit {
     });
   }
   EquipoSeleccionado(InscripcionID:number){
-    alert(InscripcionID);
+    this.buscarPartidos(this.categoriaID, this.jornadaID, InscripcionID);
 
   }
 
@@ -121,7 +121,8 @@ export class InicioComponent implements OnInit {
   }
   
   mostrarCategoria(catID: number){
-    this.buscarPartidos(catID, this.jornadaID);
+    this.buscarPartidos(catID, this.jornadaID,0);
+    this.recuperaTablaPosiciones(this.temporadaID,catID);
   }
   
   buscarJornadas(){
@@ -135,7 +136,7 @@ export class InicioComponent implements OnInit {
   }
 
   seleccionarJornadas(jornadaID:number){
-    this.buscarPartidos(this.categoriaID, jornadaID);
+    this.buscarPartidos(this.categoriaID, jornadaID,0);
     this.Jornadas = [];
     this.roljuegos_service.obtenerJornadas()
     .subscribe((object : any) => {
@@ -145,10 +146,11 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  buscarPartidos(busCategoriaID:number,busJornadaID:number){
+  buscarPartidos(busCategoriaID:number,busJornadaID:number, busInscripcionID:number){
     let json = {
       JornadaID : busJornadaID,
-      CategoriaID : busCategoriaID
+      CategoriaID : busCategoriaID,
+      InscripcionID : busInscripcionID
     };
     this.lastesdGames = [];
     this.roljuegos_service.obtenerResultados(json)
