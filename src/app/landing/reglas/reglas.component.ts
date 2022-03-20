@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReglasComponent implements OnInit {
 
+  url  = "https://apiliga.reydelosdeportes.com.mx/storage/reglas/reglas.pdf";
+
   constructor() { }
 
   ngOnInit(): void {

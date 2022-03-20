@@ -96,9 +96,9 @@ export class InicioComponent implements OnInit {
 
   recuperarPremios(){
     this.PremiosData = [
-      { titulo_amarillo : "MEJOR", titulo : "ENTRENADOR", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-1.jpg"},
-      { titulo_amarillo : "MEJOR", titulo : "JUGADOR", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-2.jpg"},
-      { titulo_amarillo : "CAMPEON", titulo : "", fecha : "NOVIEMBRE 2021", foto_copa : "http://127.0.0.1/api_liga/storage/anuncios/anuncio-3.jpg"}
+      { titulo_amarillo : "MEJOR", titulo : "ENTRENADOR", fecha : "NOVIEMBRE 2021", foto_copa : "https://apiliga.reydelosdeportes.com.mx/storage/anuncios/anuncio-1.jpg"},
+      { titulo_amarillo : "MEJOR", titulo : "JUGADOR", fecha : "NOVIEMBRE 2021", foto_copa : "https://apiliga.reydelosdeportes.com.mx/storage/anuncios/anuncio-2.jpg"},
+      { titulo_amarillo : "CAMPEON", titulo : "", fecha : "NOVIEMBRE 2021", foto_copa : "https://apiliga.reydelosdeportes.com.mx/storage/anuncios/anuncio-3.jpg"}
     ]
   }
 
